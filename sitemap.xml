@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+    <!-- Homepage -->
+    <url>
+        <loc>http://localhost/marianconnect/</loc>
+        <lastmod>2025-01-01</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- About Pages -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/about.php</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://localhost/marianconnect/pages/mission-vision.php</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://localhost/marianconnect/pages/history.php</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Programs -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/programs.php</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- News -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/news.php</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- Events -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/events.php</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Gallery -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/gallery.php</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Facilities -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/facilities.php</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Organizations -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/organizations.php</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Achievements -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/achievements.php</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Contact -->
+    <url>
+        <loc>http://localhost/marianconnect/pages/contact.php</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Note: Add dynamic URLs for individual news, events, programs, etc. -->
+    
+</urlset>

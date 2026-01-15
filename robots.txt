@@ -1,0 +1,24 @@
+# MARIANCONNECT - Robots.txt
+# SEO Configuration for Search Engine Crawlers
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /api/
+Disallow: /logs/
+Disallow: /backups/
+Disallow: /vendor/
+
+# Allow access to public assets
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+Allow: /assets/uploads/
+
+# Sitemap location
+Sitemap: http://localhost/marianconnect/sitemap.xml
+
+# Crawl delay (optional - adjust as needed)
+Crawl-delay: 1

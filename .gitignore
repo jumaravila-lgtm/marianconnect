@@ -1,0 +1,37 @@
+# Configuration files with sensitive data
+config/database.php
+config/security.php
+
+# User uploads
+assets/uploads/
+uploads/
+
+# Logs
+logs/*.log
+logs/
+
+# Backups
+backups/*
+!backups/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Vendor dependencies
+vendor/
+
+# Temporary files
+*.tmp
+*.cache
+
+# Environment files
+.env

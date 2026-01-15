@@ -1,0 +1,241 @@
+<?php
+require_once '../includes/auth-check.php';
+$db = getDB();
+
+$category = $_GET['category'] ?? 'all';
+$search = $_GET['search'] ?? '';
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$perPage = 25;
+$offset = ($page - 1) * $perPage;
+
+$where = [];
+$params = [];
+
+if ($category !== 'all') {
+    $where[] = "category = ?";
+    $params[] = $category;
+}
+
+if (!empty($search)) {
+    $where[] = "(org_name LIKE ? OR acronym LIKE ? OR adviser_name LIKE ?)";
+    $searchTerm = "%{$search}%";
+    $params[] = $searchTerm;
+    $params[] = $searchTerm;
+    $params[] = $searchTerm;
+}
+
+$whereClause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+
+$countSql = "SELECT COUNT(*) FROM student_organizations {$whereClause}";
+$countStmt = $db->prepare($countSql);
+$countStmt->execute($params);
+$totalRecords = $countStmt->fetchColumn();
+$totalPages = ceil($totalRecords / $perPage);
+
+$sql = "SELECT * FROM student_organizations {$whereClause} ORDER BY display_order ASC, org_name ASC LIMIT {$perPage} OFFSET {$offset}";
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
+$organizations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$stats = [
+    'total' => $db->query("SELECT COUNT(*) FROM student_organizations")->fetchColumn(),
+    'active' => $db->query("SELECT COUNT(*) FROM student_organizations WHERE is_active = 1")->fetchColumn(),
+    'academic' => $db->query("SELECT COUNT(*) FROM student_organizations WHERE category = 'academic'")->fetchColumn(),
+    'sports' => $db->query("SELECT COUNT(*) FROM student_organizations WHERE category = 'sports'")->fetchColumn(),
+];
+
+$pageTitle = 'Student Organizations';
+include '../includes/admin-header.php';
+?>
+
+<div class="page-header">
+    <h1>Student Organizations</h1>
+    <a href="create.php" class="btn btn-primary"><i class="fas fa-plus"></i> Add Organization</a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon" style="background:#e3f2fd;color:#1976d2"><i class="fas fa-users"></i></div>
+        <div class="stat-content">
+            <div class="stat-value"><?php echo $stats['total']; ?></div>
+            <div class="stat-label">Total Organizations</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background:#e8f5e9;color:#388e3c"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-content">
+            <div class="stat-value"><?php echo $stats['active']; ?></div>
+            <div class="stat-label">Active</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background:#f3e5f5;color:#7b1fa2"><i class="fas fa-graduation-cap"></i></div>
+        <div class="stat-content">
+            <div class="stat-value"><?php echo $stats['academic']; ?></div>
+            <div class="stat-label">Academic</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon" style="background:#fff3e0;color:#f57c00"><i class="fas fa-football-ball"></i></div>
+        <div class="stat-content">
+            <div class="stat-value"><?php echo $stats['sports']; ?></div>
+            <div class="stat-label">Sports</div>
+        </div>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <form method="GET" action="" class="filter-form">
+        <div class="filter-group">
+            <select name="category" class="filter-select" onchange="this.form.submit()">
+                <option value="all" <?php echo $category === 'all' ? 'selected' : ''; ?>>All Categories</option>
+                <option value="academic" <?php echo $category === 'academic' ? 'selected' : ''; ?>>Academic</option>
+                <option value="sports" <?php echo $category === 'sports' ? 'selected' : ''; ?>>Sports</option>
+                <option value="cultural" <?php echo $category === 'cultural' ? 'selected' : ''; ?>>Cultural</option>
+                <option value="religious" <?php echo $category === 'religious' ? 'selected' : ''; ?>>Religious</option>
+                <option value="service" <?php echo $category === 'service' ? 'selected' : ''; ?>>Service</option>
+                <option value="special_interest" <?php echo $category === 'special_interest' ? 'selected' : ''; ?>>Special Interest</option>
+            </select>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" name="search" placeholder="Search organizations..." value="<?php echo escapeHtml($search); ?>" class="search-input">
+            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+</div>
+
+<div class="table-card">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width:80px">Logo</th>
+                <th>Organization Name</th>
+                <th>Acronym</th>
+                <th>Category</th>
+                <th>Adviser</th>
+                <th>President</th>
+                <th>Est. Year</th>
+                <th style="width:100px">Status</th>
+                <th style="width:150px">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (empty($organizations)): ?>
+            <tr>
+                <td colspan="9" class="text-center">No organizations found</td>
+            </tr>
+            <?php else: ?>
+                <?php foreach ($organizations as $org): ?>
+                <tr>
+                    <td>
+                        <?php if ($org['logo']): ?>
+                            <img src="<?php echo escapeHtml(getImageUrl($org['logo'])); ?>" alt="" class="org-logo">
+                        <?php else: ?>
+                            <div class="org-logo-placeholder"><i class="fas fa-users"></i></div>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <div class="org-name"><?php echo escapeHtml($org['org_name']); ?></div>
+                    </td>
+                    <td><span class="badge badge-acronym"><?php echo escapeHtml($org['acronym'] ?? '-'); ?></span></td>
+                    <td>
+                        <?php
+                        $categoryBadges = [
+                            'academic' => ['Academic', '#9c27b0'],
+                            'sports' => ['Sports', '#ff9800'],
+                            'cultural' => ['Cultural', '#e91e63'],
+                            'religious' => ['Religious', '#673ab7'],
+                            'service' => ['Service', '#4caf50'],
+                            'special_interest' => ['Special Interest', '#2196f3']
+                        ];
+                        $badge = $categoryBadges[$org['category']];
+                        ?>
+                        <span class="badge badge-category" style="background:<?php echo $badge[1]; ?>"><?php echo $badge[0]; ?></span>
+                    </td>
+                    <td><?php echo escapeHtml($org['adviser_name'] ?? '-'); ?></td>
+                    <td><?php echo escapeHtml($org['president_name'] ?? '-'); ?></td>
+                    <td><?php echo escapeHtml($org['established_year'] ?? '-'); ?></td>
+                    <td>
+                        <?php if ($org['is_active']): ?>
+                            <span class="badge badge-success">Active</span>
+                        <?php else: ?>
+                            <span class="badge badge-inactive">Inactive</span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="edit.php?id=<?php echo $org['org_id']; ?>" class="btn-action btn-edit" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="delete.php?id=<?php echo $org['org_id']; ?>" class="btn-action btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php if ($totalPages > 1): ?>
+<div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?php echo $page-1; ?>&category=<?php echo $category; ?>&search=<?php echo urlencode($search); ?>" class="page-link">&laquo; Previous</a>
+    <?php endif; ?>
+    
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="?page=<?php echo $i; ?>&category=<?php echo $category; ?>&search=<?php echo urlencode($search); ?>" class="page-link <?php echo $i === $page ? 'active' : ''; ?>">
+            <?php echo $i; ?>
+        </a>
+    <?php endfor; ?>
+    
+    <?php if ($page < $totalPages): ?>
+        <a href="?page=<?php echo $page+1; ?>&category=<?php echo $category; ?>&search=<?php echo urlencode($search); ?>" class="page-link">Next &raquo;</a>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+
+<style>
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem}
+.stat-card{background:white;border-radius:12px;padding:1.5rem;box-shadow:var(--admin-shadow);display:flex;gap:1rem;align-items:center}
+.stat-icon{width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.stat-value{font-size:2rem;font-weight:700;color:var(--admin-text)}
+.stat-label{font-size:0.9rem;color:var(--admin-text-muted);margin-top:0.25rem}
+.filter-bar{background:white;border-radius:12px;padding:1.5rem;margin-bottom:2rem;box-shadow:var(--admin-shadow)}
+.filter-form{display:flex;gap:1rem;align-items:center}
+.filter-select{padding:0.75rem 1rem;border:2px solid var(--admin-border);border-radius:8px;font-size:0.95rem}
+.search-box{display:flex;gap:0.5rem;flex:1;max-width:400px}
+.search-input{flex:1;padding:0.75rem 1rem;border:2px solid var(--admin-border);border-radius:8px}
+.search-btn{padding:0.75rem 1.5rem;background:var(--admin-primary);color:white;border:none;border-radius:8px;cursor:pointer}
+.table-card{background:white;border-radius:12px;box-shadow:var(--admin-shadow);overflow:hidden}
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{background:#f8f9fa;padding:1rem;text-align:left;font-weight:600;border-bottom:2px solid var(--admin-border)}
+.data-table td{padding:1rem;border-bottom:1px solid var(--admin-border)}
+.org-logo{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.org-logo-placeholder{width:60px;height:60px;background:#f0f0f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999}
+.org-name{font-weight:500;margin-bottom:0.25rem}
+.badge{display:inline-block;padding:0.35rem 0.75rem;border-radius:6px;font-size:0.85rem;font-weight:500}
+.badge-acronym{background:#e3f2fd;color:#1565c0}
+.badge-category{color:white}
+.badge-success{background:#e8f5e9;color:#2e7d32}
+.badge-inactive{background:#f5f5f5;color:#757575}
+.action-buttons{display:flex;gap:0.5rem}
+.btn-action{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;transition:all 0.2s}
+.btn-edit{background:#e3f2fd;color:#1976d2}
+.btn-edit:hover{background:#1976d2;color:white}
+.btn-delete{background:#ffebee;color:#d32f2f}
+.btn-delete:hover{background:#d32f2f;color:white}
+.pagination{display:flex;gap:0.5rem;justify-content:center;margin-top:2rem}
+.page-link{padding:0.5rem 1rem;border:2px solid var(--admin-border);border-radius:8px;text-decoration:none;color:var(--admin-text)}
+.page-link.active{background:var(--admin-primary);color:white;border-color:var(--admin-primary)}
+.text-center{text-align:center;padding:3rem!important;color:var(--admin-text-muted)}
+.btn{padding:0.6rem 1.25rem;border:none;border-radius:8px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;transition:all 0.2s}
+.btn-primary{background:var(--admin-primary);color:white}
+.btn-primary:hover{background:#004a99;transform:translateY(-2px)}
+</style>
+
+<?php include '../includes/admin-footer.php'; ?>
