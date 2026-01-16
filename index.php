@@ -269,12 +269,14 @@ $pageTitle = $siteName . ' - ' . $siteTagline;
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
                     <article class="news-card">
                         <div class="news-image">
-                            <img src="<?php echo getImageUrl($news['featured_image']); ?>" 
-                                alt="<?php echo htmlspecialchars($news['title']); ?>"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="no-image-placeholder" style="display: none;">
-                                <i class="fas fa-newspaper"></i>
-                            </div>
+                            <?php if (!empty($news['featured_image'])): ?>
+                                <img src="<?php echo getImageUrl($news['featured_image']); ?>" 
+                                    alt="<?php echo htmlspecialchars($news['title']); ?>">
+                            <?php else: ?>
+                                <div class="no-image-placeholder" style="display: flex; width: 100%; height: 250px; background: #003f87; align-items: center; justify-content: center; color: white; font-size: 1rem; border-radius: 8px 8px 0 0;">
+                                    <i class="fas fa-newspaper" style="font-size: 3rem;"></i>
+                                </div>
+                            <?php endif; ?>
                             <div class="news-category"><?php echo htmlspecialchars(ucfirst($news['category'])); ?></div>
                         </div>
                         <div class="news-content">

@@ -95,7 +95,14 @@ if (!isset($current_dir)) {
                     <span>Administration</span>
                 </a>
             </li>
-
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin'): ?>
+            <li class="nav-item <?php echo $current_dir === 'departments' ? 'active' : ''; ?>">
+                <a href="<?php echo url('admin/departments/index.php'); ?>">
+                    <i class="fas fa-building"></i>
+                    <span>Departments</span>
+                </a>
+            </li>
+            <?php endif; ?>
             <li class="nav-item <?php echo $current_dir === 'sliders' ? 'active' : ''; ?>">
                 <a href="<?php echo url('admin/sliders/index.php'); ?>">
                     <i class="fas fa-sliders-h"></i>

@@ -69,15 +69,19 @@ try {
     $administration = [];
 }
 
-// Departments
-$departments = [
-    ['icon' => 'fa-graduation-cap', 'name' => 'Academic Affairs', 'head' => 'Dr. Juan dela Cruz'],
-    ['icon' => 'fa-users', 'name' => 'Student Affairs', 'head' => 'Mrs. Ana Reyes'],
-    ['icon' => 'fa-book', 'name' => 'Library Services', 'head' => 'Ms. Linda Martinez'],
-    ['icon' => 'fa-heartbeat', 'name' => 'Health Services', 'head' => 'Dr. Rosa Fernandez'],
-    ['icon' => 'fa-desktop', 'name' => 'IT Department', 'head' => 'Mr. Carlos Ramos'],
-    ['icon' => 'fa-bullhorn', 'name' => 'Public Relations', 'head' => 'Ms. Sofia Cruz']
-];
+// Fetch Departments from database
+try {
+    $stmt = $db->prepare("
+        SELECT * FROM departments 
+        WHERE is_active = 1 
+        ORDER BY display_order ASC
+    ");
+    $stmt->execute();
+    $departments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    error_log("Database error: " . $e->getMessage());
+    $departments = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,7 +165,7 @@ $departments = [
                 <?php foreach ($administration as $index => $admin): ?>
                     <div class="admin-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
                         <div class="admin-image">
-                            <img src="<?php echo asset('images/administration/' . $admin['image']); ?>" 
+                            <img src="<?php echo escapeHtml(getImageUrl($admin['featured_image'])); ?>"
                                  alt="<?php echo htmlspecialchars($admin['name']); ?>"
                                  onerror="this.src='https://via.placeholder.com/300x300/003f87/ffffff?text=<?php echo urlencode(substr($admin['name'], 0, 1)); ?>'">
                             <div class="admin-overlay">
@@ -193,10 +197,10 @@ $departments = [
                 <?php foreach ($departments as $index => $dept): ?>
                     <div class="department-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
                         <div class="dept-icon">
-                            <i class="fas <?php echo $dept['icon']; ?>"></i>
+                            <i class="fas <?php echo htmlspecialchars($dept['icon']); ?>"></i>
                         </div>
                         <h3><?php echo htmlspecialchars($dept['name']); ?></h3>
-                        <p class="dept-head">Head: <?php echo htmlspecialchars($dept['head']); ?></p>
+                        <p class="dept-head">Head: <?php echo htmlspecialchars($dept['head_name']); ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
