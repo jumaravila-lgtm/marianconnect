@@ -2,9 +2,9 @@
 require_once '../includes/auth-check.php';
 $db = getDB();
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
-if ($id <= 0) {
+if ($id === null || $id < 0) {
     setFlashMessage('error', 'Invalid gallery ID');
     redirect('index.php');
 }
@@ -66,7 +66,7 @@ include '../includes/admin-header.php';
         <p class="delete-message">Delete this image? This cannot be undone.</p>
         
         <div class="image-preview">
-            <img src="<?php echo escapeHtml(getImageUrl($item['image_path'])); ?>" alt="<?php echo escapeHtml($item['title']); ?>">
+            <img src="<?php echo escapeHtml(asset($item['image_path'])); ?>" alt="<?php echo escapeHtml($item['title']); ?>" onerror="this.style.display='none'">
         </div>
         
         <div class="item-preview">
@@ -79,7 +79,9 @@ include '../includes/admin-header.php';
                 <span class="badge badge-<?php echo $item['category']; ?>"><?php echo ucfirst($item['category']); ?></span>
             </div>
         </div>
-        
+        <div class="warning-message">
+            <strong>Warning:</strong> This action cannot be undone. The image and its associated thumbnail will be permanently deleted.
+        </div>
         <form method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
             <div class="delete-actions">
@@ -97,6 +99,8 @@ include '../includes/admin-header.php';
 .delete-icon i{font-size:2.5rem;color:#856404}
 .delete-card h2{font-size:1.75rem;font-weight:600;margin-bottom:1rem}
 .delete-message{font-size:1.1rem;color:var(--admin-text-muted);margin-bottom:2rem}
+.warning-message {background: #fff3cd;border: 1px solid #ffc107;border-radius: 8px;padding: 1rem;margin-bottom: 2rem;color: #856404;text-align: left;}
+.warning-message strong {display: block;margin-bottom: 0.5rem;}
 .image-preview{margin-bottom:2rem;border-radius:8px;overflow:hidden;border:2px solid var(--admin-border)}
 .image-preview img{width:100%;max-height:300px;object-fit:contain}
 .item-preview{background:#f8f9fa;border:2px solid var(--admin-border);border-radius:8px;padding:1.5rem;margin-bottom:2rem;text-align:left}

@@ -77,7 +77,9 @@ include '../includes/admin-header.php';
             
             <div class="preview-item">
                 <strong>Category:</strong>
-                <span class="badge badge-category"><?php echo ucfirst(str_replace('_', ' ', $achievement['category'])); ?></span>
+                <div style="background: #9c27b0; color: white; padding: 0.35rem 0.75rem; border-radius: 6px; font-weight: 500; display: inline-block;">
+                    <?php echo strtoupper(str_replace('_', ' ', $achievement['category'])); ?>
+                </div>
             </div>
             
             <?php if ($achievement['recipient_name']): ?>
@@ -114,7 +116,9 @@ include '../includes/admin-header.php';
                 <p class="preview-content"><?php echo escapeHtml($achievement['description']); ?></p>
             </div>
         </div>
-        
+        <div class="warning-message">
+            <strong>Warning:</strong> This action cannot be undone. The achievement and its associated image will be permanently deleted.
+        </div>
         <form method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
             <div class="delete-actions">
@@ -197,7 +201,19 @@ include '../includes/admin-header.php';
     margin-bottom: 2rem;
     line-height: 1.6;
 }
-
+.warning-message {
+    background:#fff3cd;
+    border:1px solid #ffc107;
+    border-radius:8px;
+    padding:1rem;
+    margin-bottom:1.5rem;
+    color:#856404;
+    text-align:left
+}
+.warning-message strong{
+    display:block;
+    margin-bottom:0.5rem
+}
 .achievement-image {
     margin-bottom: 2rem;
     border-radius: 12px;

@@ -72,7 +72,7 @@ include '../includes/admin-header.php';
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Icon</th>
+                    <th>Image</th>
                     <th>Department Name</th>
                     <th>Department Head</th>
                     <th>Order</th>

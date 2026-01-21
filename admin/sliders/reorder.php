@@ -6,7 +6,7 @@ $db = getDB();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order'])) {
     header('Content-Type: application/json');
     
-    $order = $_POST['order'];
+    $order = json_decode($_POST['order'], true);
     
     try {
         $db->beginTransaction();
@@ -140,12 +140,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Save order via AJAX
+            const formData = new FormData();
+            formData.append('order', JSON.stringify(order));
+
             fetch('reorder.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'order=' + JSON.stringify(order)
+                body: formData
             })
             .then(response => response.json())
             .then(data => {

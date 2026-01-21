@@ -95,17 +95,17 @@ include '../includes/admin-header.php';
             
             <div class="preview-item">
                 <strong>Level:</strong>
-                <span class="badge badge-level">
+                <div style="background: #9c27b0; color: white; padding: 0.35rem 0.75rem; border-radius: 6px; font-weight: 500; display: inline-block;">
                     <?php
                     $levels = [
-                        'elementary' => 'Elementary',
-                        'junior_high' => 'Junior High',
-                        'senior_high' => 'Senior High',
-                        'college' => 'College'
+                        'elementary' => 'ELEMENTARY',
+                        'junior_high' => 'JUNIOR HIGH',
+                        'senior_high' => 'SENIOR HIGH',
+                        'college' => 'COLLEGE'
                     ];
                     echo $levels[$program['level']];
                     ?>
-                </span>
+                </div>
             </div>
             
             <div class="preview-item">
@@ -130,7 +130,9 @@ include '../includes/admin-header.php';
                 <p class="preview-content"><?php echo escapeHtml($program['description']); ?></p>
             </div>
         </div>
-        
+        <div class="warning-message">
+            <strong>Warning:</strong> This action cannot be undone. The program and all its associated data will be permanently deleted.
+        </div>
         <form method="POST" action="" class="delete-form">
             <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
             
@@ -185,7 +187,8 @@ include '../includes/admin-header.php';
     margin: 0 auto 2rem;
     animation: pulse 2s infinite;
 }
-
+.warning-message{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:1rem;margin-bottom:1.5rem;color:#856404;text-align:left}
+.warning-message strong{display:block;margin-bottom:0.5rem}
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
