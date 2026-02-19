@@ -56,9 +56,15 @@ if (!isset($stats)) {
         <!-- Top Header -->
         <header class="admin-header">
             <div class="header-left">
-                <button class="mobile-toggle" id="mobileToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <!-- Logo and Hamburger -->
+                <div class="header-brand">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <img src="<?php echo url('assets/images/logo/logo-white.png'); ?>" alt="SMCC" class="header-logo">
+                    <span class="header-title">MARIANCONNECT</span>
+                </div>
+                
                 <div class="breadcrumb">
                     <a href="<?php echo url('admin/index.php'); ?>">Admin</a>
                     <?php if (isset($pageTitle)): ?>

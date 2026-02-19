@@ -72,13 +72,7 @@ try {
         ORDER BY event_date ASC
         LIMIT 3
     ")->fetchAll();
-        // Fix image paths for upcoming events
-    foreach ($upcomingEvents as &$event) {
-        if (!empty($event['featured_image'])) {
-            $event['featured_image'] = asset($event['featured_image']);
-        }
-    }
-    unset($event);
+        
 } catch (Exception $e) {
     $upcomingEvents = [];
     error_log("Events query error: " . $e->getMessage());
@@ -168,10 +162,12 @@ $pageTitle = $siteName . ' - ' . $siteTagline;
         </div>
         <?php else: ?>
         <!-- Default Hero when no sliders -->
-        <div class="hero-slide" style="background: linear-gradient(135deg, #003f87, #002855);">
+        <div class="hero-slide" style="background: linear-gradient(135deg, rgba(0,63,135,0.85), rgba(0,40,85,0.9)), url('assets/images/school.png') center / cover no-repeat;">
             <div class="hero-content container">
-                <h1 class="hero-title" data-aos="fade-up" style="color: white;">Welcome to <?php echo escapeHtml($siteName); ?></h1>
-                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100" style="color: white;"><?php echo escapeHtml($siteTagline); ?></p>
+                <h1 class="hero-title" data-aos="fade-up" style="color: white; text-shadow: 0 4px 12px rgba(0,0,0,0.5); font-weight: 700;">Welcome to <?php echo escapeHtml($siteName); ?></h1>
+                    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="100" style="color: #ffc107; text-shadow: 0 2px 8px rgba(0,0,0,0.4); font-size: 1.25rem; font-weight: 500;">
+                    <?php echo escapeHtml($siteTagline); ?>
+                    </p>
             </div>
         </div>
         <?php endif; ?>
@@ -320,25 +316,25 @@ $pageTitle = $siteName . ' - ' . $siteTagline;
             <div class="row g-4 text-center">
                 <div class="col-md-3" data-aos="fade-up">
                     <div class="stat-item">
-                        <div class="stat-number" data-count="75">0</div>
+                        <div class="stat-number" data-count="">0</div>
                         <div class="stat-label">Years of Excellence</div>
                     </div>
                 </div>
                 <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
                     <div class="stat-item">
-                        <div class="stat-number" data-count="3500">0</div>
+                        <div class="stat-number" data-count="">0</div>
                         <div class="stat-label">Students</div>
                     </div>
                 </div>
                 <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
                     <div class="stat-item">
-                        <div class="stat-number" data-count="150">0</div>
+                        <div class="stat-number" data-count="">0</div>
                         <div class="stat-label">Faculty Members</div>
                     </div>
                 </div>
                 <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
                     <div class="stat-item">
-                        <div class="stat-number" data-count="20">0</div>
+                        <div class="stat-number" data-count="">0</div>
                         <div class="stat-label">Academic Programs</div>
                     </div>
                 </div>
@@ -358,9 +354,20 @@ $pageTitle = $siteName . ' - ' . $siteTagline;
                 <?php foreach ($upcomingEvents as $index => $event): ?>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
                     <div class="event-card">
-                        <div class="event-date">
-                            <span class="date-day"><?php echo date('d', strtotime($event['event_date'])); ?></span>
-                            <span class="date-month"><?php echo date('M', strtotime($event['event_date'])); ?></span>
+                        <div class="event-image">
+                            <?php if (!empty($event['featured_image'])): ?>
+                                <img src="<?php echo getImageUrl($event['featured_image']); ?>" 
+                                     alt="<?php echo escapeHtml($event['title']); ?>"
+                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%23003f87%22 width=%22400%22 height=%22250%22/%3E%3Ctext fill=%22%23ffffff%22 font-family=%22Arial%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ENo Image%3C/text%3E%3C/svg%3E'">
+                            <?php else: ?>
+                                <div class="event-placeholder">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                            <?php endif; ?>
+                            <div class="event-date-badge">
+                                <span class="date-day"><?php echo date('d', strtotime($event['event_date'])); ?></span>
+                                <span class="date-month"><?php echo date('M', strtotime($event['event_date'])); ?></span>
+                            </div>
                         </div>
                         <div class="event-content">
                             <h4 class="event-title"><?php echo escapeHtml($event['title']); ?></h4>

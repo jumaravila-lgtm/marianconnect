@@ -68,20 +68,6 @@ try {
     error_log("Database error: " . $e->getMessage());
     $administration = [];
 }
-
-// Fetch Departments from database
-try {
-    $stmt = $db->prepare("
-        SELECT * FROM departments 
-        WHERE is_active = 1 
-        ORDER BY display_order ASC
-    ");
-    $stmt->execute();
-    $departments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (Exception $e) {
-    error_log("Database error: " . $e->getMessage());
-    $departments = [];
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -126,7 +112,7 @@ try {
     ?>
     
     <!-- Page Header -->
-    <section class="page-header">
+    <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
@@ -142,16 +128,6 @@ try {
         </div>
     </section>
     
-    <!-- Introduction -->
-    <section class="page-content section-padding">
-        <div class="container">
-            <div class="intro-content" data-aos="fade-up">
-                <div class="content-wrapper">
-                    <?php echo $page['content']; ?>
-                </div>
-            </div>
-        </div>
-    </section>
     
     <!-- Leadership Team -->
     <section class="leadership-section section-padding bg-light">
@@ -177,30 +153,8 @@ try {
                         <div class="admin-info">
                             <h3><?php echo htmlspecialchars($admin['name']); ?></h3>
                             <p class="admin-position"><?php echo htmlspecialchars($admin['position']); ?></p>
-                            <p class="admin-description"><?php echo htmlspecialchars($admin['description']); ?></p>
+                            <p class="admin-description"><?php echo htmlspecialchars($admin['description'] ?? ''); ?></p>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Departments -->
-    <section class="departments-section section-padding">
-        <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
-                <h2 class="section-title">Our Departments</h2>
-                <p class="section-subtitle">Supporting your educational journey every step of the way</p>
-            </div>
-            
-            <div class="departments-grid">
-                <?php foreach ($departments as $index => $dept): ?>
-                    <div class="department-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
-                        <div class="dept-icon">
-                            <i class="fas <?php echo htmlspecialchars($dept['icon']); ?>"></i>
-                        </div>
-                        <h3><?php echo htmlspecialchars($dept['name']); ?></h3>
-                        <p class="dept-head">Head: <?php echo htmlspecialchars($dept['head_name']); ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -244,10 +198,9 @@ try {
 </html>
 
 <style>
-    /* Page Header Styles */
+/* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
     margin-bottom: 3rem;
@@ -259,7 +212,7 @@ try {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 
@@ -300,35 +253,32 @@ try {
     opacity: 1;
     font-weight: 600;
 }
-/* Introduction */
-.intro-content {
-    margin-bottom: 3rem;
-}
 
 /* Leadership Grid */
 .leadership-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
     margin-top: 3rem;
 }
 
 .admin-card {
     background: var(--color-white);
-    border-radius: var(--border-radius-lg);
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(0, 63, 135, 0.1);
 }
 
 .admin-card:hover {
     transform: translateY(-10px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 12px 40px rgba(0, 63, 135, 0.15);
 }
 
 .admin-image {
     position: relative;
-    height: 300px;
+    height: 320px;
     overflow: hidden;
 }
 
@@ -336,11 +286,11 @@ try {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform var(--transition-slow);
+    transition: transform 0.6s ease;
 }
 
 .admin-card:hover .admin-image img {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 .admin-overlay {
@@ -349,12 +299,12 @@ try {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 63, 135, 0.9);
+    background: linear-gradient(135deg, rgba(0, 63, 135, 0.95), rgba(0, 40, 85, 0.98));
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity var(--transition-base);
+    transition: opacity 0.4s ease;
 }
 
 .admin-card:hover .admin-overlay {
@@ -362,151 +312,162 @@ try {
 }
 
 .contact-btn {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     background: var(--color-white);
-    color: var(--color-primary);
+    color: #003f87;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    transition: all var(--transition-base);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .contact-btn:hover {
-    background: var(--color-secondary);
-    transform: scale(1.1);
+    background: #ffc107;
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
 }
 
 .admin-info {
-    padding: 1.5rem;
+    padding: 2rem 1.75rem;
     text-align: center;
 }
 
 .admin-info h3 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    color: var(--color-primary);
+    color: #003f87;
+    font-weight: 700;
 }
 
 .admin-position {
     font-weight: 600;
-    color: var(--color-secondary);
+    color: #ffc107;
     margin-bottom: 1rem;
     font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .admin-description {
-    color: var(--color-gray);
-    font-size: 0.9375rem;
+    color: #6c757d;
+    font-size: 0.9rem;
     line-height: 1.6;
-}
-
-/* Departments Grid */
-.departments-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.department-card {
-    background: var(--color-white);
-    padding: 2rem;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    text-align: center;
-    transition: all var(--transition-base);
-    border-top: 4px solid var(--color-primary);
-}
-
-.department-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
-    border-top-color: var(--color-secondary);
-}
-
-.dept-icon {
-    width: 70px;
-    height: 70px;
-    margin: 0 auto 1.5rem;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: var(--color-white);
-    transition: all var(--transition-base);
-}
-
-.department-card:hover .dept-icon {
-    transform: rotate(360deg);
-}
-
-.department-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    color: var(--color-primary);
-}
-
-.dept-head {
-    color: var(--color-gray);
-    font-size: 0.9375rem;
-    margin-bottom: 0;
+    max-height: 4.8em; /* 3 lines max */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 /* Contact Admin Section */
 .contact-admin-card {
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-    padding: 3rem;
-    border-radius: var(--border-radius-xl);
+    background: linear-gradient(135deg, #003f87, #002855);
+    padding: 3.5rem 3rem;
+    border-radius: 20px;
     color: var(--color-white);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 10px 40px rgba(0, 63, 135, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-admin-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
 }
 
 .contact-admin-card h2 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
     color: var(--color-white);
+    font-weight: 700;
 }
 
 .contact-admin-card p {
-    font-size: 1.125rem;
+    font-size: 1.15rem;
     margin-bottom: 0;
     opacity: 0.95;
 }
 
 .contact-admin-card .btn-primary {
-    background-color: var(--color-white);
-    color: var(--color-primary);
-    border-color: var(--color-white);
+    background-color: #ffffff;
+    color: #003f87;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
 }
 
 .contact-admin-card .btn-primary:hover {
-    background-color: var(--color-secondary);
-    color: var(--color-dark-gray);
-    border-color: var(--color-secondary);
+    background-color: #ffc107;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(255, 193, 7, 0.4);
+}
+
+/* Section Headers */
+.section-header {
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #003f87;
+    margin-bottom: 0.75rem;
+}
+
+.section-subtitle {
+    font-size: 1.15rem;
+    color: #6c757d;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Section Padding */
+.section-padding {
+    padding: 4.5rem 0;
+}
+
+.bg-light {
+    background: #f8f9fa;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .leadership-grid {
-        grid-template-columns: 1fr;
+    .page-title {
+        font-size: 2rem;
     }
     
-    .departments-grid {
+    .leadership-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
     }
     
     .contact-admin-card {
-        padding: 2rem;
+        padding: 2.5rem 2rem;
         text-align: center;
+    }
+    
+    .contact-admin-card h2 {
+        font-size: 1.75rem;
     }
     
     .contact-admin-card .col-md-4 {
         margin-top: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
     }
 }
 </style>

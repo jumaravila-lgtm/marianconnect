@@ -42,7 +42,13 @@
    =================================== */
 .admin-sidebar {
     width: var(--sidebar-width);
-    background: linear-gradient(180deg, var(--admin-primary), var(--admin-primary-dark));
+    background-color: var(--admin-primary-dark);
+    background-image: linear-gradient(rgba(0, 40, 85, 0.88), rgba(0, 50, 100, 0.92)), 
+                      url('../images/school.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
     color: white;
     position: fixed;
     left: 0;
@@ -133,7 +139,7 @@
 
 /* Sidebar Navigation */
 .sidebar-nav {
-    padding: 1rem 0;
+    padding: 0.5rem 0;
 }
 
 .nav-menu {
@@ -460,7 +466,46 @@
     text-align: center;
     color: var(--admin-text-muted);
 }
+/* Header Brand (Logo + Hamburger) */
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 1.5rem;
+    border-right: 1px solid var(--admin-border);
+}
 
+.header-logo {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
+
+.header-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--admin-primary);
+    white-space: nowrap;
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: var(--admin-text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-toggle:hover {
+    background: var(--admin-hover);
+    color: var(--admin-primary);
+}
 /* Profile Dropdown */
 .header-profile {
     position: relative;
@@ -606,11 +651,9 @@
 
 .stat-card {
     background: white;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    border-left: 4px solid var(--admin-primary);
     box-shadow: var(--admin-shadow);
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -620,26 +663,18 @@
     box-shadow: var(--admin-shadow-lg);
 }
 
-.stat-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.75rem;
-    color: white;
-}
-
 .stat-content h3 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--admin-primary);
 }
 
 .stat-content p {
     color: var(--admin-text-muted);
     margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 /* Dashboard Section */
@@ -981,6 +1016,15 @@
 }
 
 @media (max-width: 768px) {
+    .header-title {
+        display: none;  /* Hide full title on mobile */
+    }
+    
+    .header-brand {
+        border-right: none;
+        padding-right: 0;
+    }
+
     .admin-sidebar {
         transform: translateX(-100%);
         width: var(--sidebar-width);

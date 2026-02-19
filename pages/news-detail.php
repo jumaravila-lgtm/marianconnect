@@ -137,23 +137,7 @@ $metaDescription = htmlspecialchars($news['excerpt'] ?? truncateText(strip_tags(
         include $header_path;
     }
     ?>
-    
-    <!-- Page Header -->
-    <section class="page-header page-header-sm">
-        <div class="page-header-overlay"></div>
-        <div class="container">
-            <div class="page-header-content" data-aos="fade-up">
-                <nav class="breadcrumb">
-                    <a href="<?php echo url(); ?>">Home</a>
-                    <span class="separator">/</span>
-                    <a href="news.php">News</a>
-                    <span class="separator">/</span>
-                    <span class="current"><?php echo htmlspecialchars($news['title']); ?></span>
-                </nav>
-            </div>
-        </div>
-    </section>
-    
+
     <!-- Main Content -->
     <section class="page-content section-padding">
         <div class="container">
@@ -344,11 +328,6 @@ $metaDescription = htmlspecialchars($news['excerpt'] ?? truncateText(strip_tags(
 </html>
 
 <style>
-/* Page Header Small */
-.page-header-sm {
-    padding: 2rem 0 1.5rem;
-}
-
 /* News Article */
 .news-article {
     background: var(--color-white);

@@ -88,12 +88,9 @@ include 'includes/admin-header.php';
         <p>Welcome back, <?php echo escapeHtml($_SESSION['full_name']); ?>!</p>
     </div>
 
-    <!-- Statistics Cards -->
+<!-- Statistics Cards -->
     <div class="stats-grid">
         <div class="stat-card">
-            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-                <i class="icon-visitors"></i>
-            </div>
             <div class="stat-content">
                 <h3><?php echo number_format($stats['visitors_today']); ?></h3>
                 <p>Visitors Today</p>
@@ -101,9 +98,6 @@ include 'includes/admin-header.php';
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-                <i class="icon-news"></i>
-            </div>
             <div class="stat-content">
                 <h3><?php echo number_format($stats['total_news']); ?></h3>
                 <p>Total News</p>
@@ -111,9 +105,6 @@ include 'includes/admin-header.php';
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
-                <i class="icon-calendar"></i>
-            </div>
             <div class="stat-content">
                 <h3><?php echo number_format($stats['total_events']); ?></h3>
                 <p>Total Events</p>
@@ -121,9 +112,6 @@ include 'includes/admin-header.php';
         </div>
 
         <div class="stat-card">
-            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
-                <i class="icon-message"></i>
-            </div>
             <div class="stat-content">
                 <h3><?php echo number_format($stats['new_messages']); ?></h3>
                 <p>New Messages</p>
@@ -131,7 +119,7 @@ include 'includes/admin-header.php';
         </div>
     </div>
 
-    <!-- Visitor Chart -->
+<!-- Visitor Chart -->
     <div class="dashboard-section">
         <div class="section-header">
             <h2>Visitor Analytics (Last 7 Days)</h2>
@@ -141,7 +129,7 @@ include 'includes/admin-header.php';
         </div>
     </div>
 
-    <!-- Two Column Layout -->
+<!-- Two Column Layout -->
     <div class="dashboard-grid">
         <!-- Recent News -->
         <div class="dashboard-section">
@@ -187,7 +175,7 @@ include 'includes/admin-header.php';
             </div>
         </div>
 
-        <!-- Recent Messages -->
+<!-- Recent Messages -->
         <div class="dashboard-section">
             <div class="section-header">
                 <h2>Recent Messages</h2>
@@ -261,7 +249,7 @@ include 'includes/admin-header.php';
             </div>
         </div>
 
-        <!-- Active Announcements -->
+    <!-- Active Announcements -->
         <div class="dashboard-section">
             <div class="section-header">
                 <h2>Active Announcements</h2>
@@ -290,40 +278,6 @@ include 'includes/admin-header.php';
             </div>
         </div>
     </div>
-
-    <!-- Quick Actions -->
-    <div class="dashboard-section">
-        <div class="section-header">
-            <h2>Quick Actions</h2>
-        </div>
-        <div class="quick-actions">
-            <a href="news/create.php" class="action-btn">
-                <i class="icon-plus"></i>
-                <span>Add News</span>
-            </a>
-            <a href="events/create.php" class="action-btn">
-                <i class="icon-plus"></i>
-                <span>Add Event</span>
-            </a>
-            <a href="announcements/create.php" class="action-btn">
-                <i class="icon-plus"></i>
-                <span>Add Announcement</span>
-            </a>
-            <a href="gallery/upload.php" class="action-btn">
-                <i class="icon-upload"></i>
-                <span>Upload Images</span>
-            </a>
-            <a href="messages/index.php" class="action-btn">
-                <i class="icon-message"></i>
-                <span>View Messages</span>
-            </a>
-            <a href="analytics/index.php" class="action-btn">
-                <i class="icon-chart"></i>
-                <span>View Analytics</span>
-            </a>
-        </div>
-    </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>

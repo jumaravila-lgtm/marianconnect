@@ -46,28 +46,24 @@ include '../includes/admin-header.php';
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-icon" style="background:#e3f2fd;color:#1976d2"><i class="fas fa-eye"></i></div>
         <div class="stat-content">
             <div class="stat-value"><?php echo number_format($totalVisits); ?></div>
             <div class="stat-label">Total Visits</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon" style="background:#e8f5e9;color:#388e3c"><i class="fas fa-users"></i></div>
         <div class="stat-content">
             <div class="stat-value"><?php echo number_format($uniqueVisitors); ?></div>
             <div class="stat-label">Unique Visitors</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon" style="background:#fff3e0;color:#f57c00"><i class="fas fa-file-alt"></i></div>
         <div class="stat-content">
             <div class="stat-value"><?php echo number_format($pageViews); ?></div>
             <div class="stat-label">Page Views</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon" style="background:#f3e5f5;color:#7b1fa2"><i class="fas fa-chart-line"></i></div>
         <div class="stat-content">
             <div class="stat-value"><?php echo $uniqueVisitors > 0 ? number_format($pageViews / $uniqueVisitors, 1) : '0'; ?></div>
             <div class="stat-label">Pages per Visit</div>
@@ -118,33 +114,312 @@ include '../includes/admin-header.php';
 </div>
 
 <style>
-.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
-.header-actions{display:flex;gap:0.75rem}
-.filter-bar{background:white;border-radius:12px;padding:1rem;margin-bottom:2rem;box-shadow:var(--admin-shadow)}
-.filter-buttons{display:flex;gap:0.5rem}
-.filter-btn{padding:0.5rem 1.25rem;border:2px solid var(--admin-border);border-radius:8px;text-decoration:none;color:var(--admin-text);font-weight:500;transition:all 0.2s}
-.filter-btn:hover{border-color:var(--admin-primary);background:#e3f2fd}
-.filter-btn.active{background:var(--admin-primary);color:white;border-color:var(--admin-primary)}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem}
-.stat-card{background:white;border-radius:12px;padding:1.5rem;box-shadow:var(--admin-shadow);display:flex;gap:1rem;align-items:center}
-.stat-icon{width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
-.stat-value{font-size:2rem;font-weight:700;color:var(--admin-text)}
-.stat-label{font-size:0.9rem;color:var(--admin-text-muted)}
-.charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-bottom:2rem}
-.chart-card{background:white;border-radius:12px;padding:1.5rem;box-shadow:var(--admin-shadow)}
-.chart-card h3{font-size:1.1rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem;color:var(--admin-text)}
-.chart-container{position:relative;height:300px;width:100%}
-.table-card{background:white;border-radius:12px;padding:1.5rem;box-shadow:var(--admin-shadow)}
-.table-card h3{font-size:1.1rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem;color:var(--admin-text)}
-.data-table{width:100%;border-collapse:collapse}
-.data-table th{background:#f8f9fa;padding:1rem;text-align:left;font-weight:600;border-bottom:2px solid var(--admin-border)}
-.data-table td{padding:1rem;border-bottom:1px solid var(--admin-border)}
-.data-table code{background:#f5f5f5;padding:0.25rem 0.5rem;border-radius:4px;font-size:0.9rem}
-.text-center{text-align:center;padding:2rem;color:var(--admin-text-muted)}
-.btn{padding:0.6rem 1.25rem;border:none;border-radius:8px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;transition:all 0.2s}
-.btn-secondary{background:#6c757d;color:white}
-.btn-secondary:hover{background:#5a6268}
-@media(max-width:1024px){.charts-grid{grid-template-columns:1fr}}
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.page-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--admin-text);
+    border: 2px solid var(--admin-border);
+}
+
+.btn-secondary:hover {
+    background: var(--admin-primary);
+    color: white;
+    border-color: var(--admin-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 63, 135, 0.25);
+}
+
+/* Filter Bar */
+.filter-bar {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--admin-border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--admin-text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    border-color: var(--admin-primary);
+    background: #f0f4ff;
+    color: var(--admin-primary);
+}
+
+.filter-btn.active {
+    background: var(--admin-primary);
+    color: white;
+    border-color: var(--admin-primary);
+    box-shadow: 0 2px 8px rgba(0, 63, 135, 0.25);
+}
+
+/* Stats Grid - Clean Design */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    border-left: 4px solid var(--admin-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+    transition: all 0.3s;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card:nth-child(1) { border-left-color: #1976d2; }
+.stat-card:nth-child(2) { border-left-color: #388e3c; }
+.stat-card:nth-child(3) { border-left-color: #f57c00; }
+.stat-card:nth-child(4) { border-left-color: #7b1fa2; }
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 2.25rem; 
+    font-weight: 700;
+    color: var(--admin-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.2; 
+    word-break: break-word; 
+}
+
+.stat-label {
+    color: var(--admin-text-muted);
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Charts Grid */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+}
+
+.chart-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--admin-text);
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--admin-border);
+}
+
+.chart-card h3::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--admin-primary);
+    border-radius: 2px;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* Table Card */
+.table-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+    overflow: hidden;
+}
+
+.table-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--admin-text);
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--admin-border);
+}
+
+.table-card h3::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--admin-primary);
+    border-radius: 2px;
+}
+
+/* Data Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.data-table thead {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-bottom: 2px solid var(--admin-border);
+}
+
+.data-table th {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--admin-text);
+}
+
+.data-table td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--admin-border);
+    background: transparent;
+}
+
+.data-table tbody tr {
+    transition: all 0.3s;
+    background: white;
+}
+
+.data-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.data-table code {
+    background: #f5f5f5;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--admin-primary);
+    font-family: 'Courier New', monospace;
+    border: 1px solid var(--admin-border);
+}
+
+.text-center {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--admin-text-muted);
+    font-size: 1.05rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-buttons {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-buttons {
+        flex-direction: column;
+    }
+    
+    .filter-btn {
+        text-align: center;
+    }
+}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>

@@ -83,10 +83,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                 <!-- Navigation Menu -->
                 <div class="navbar-menu" id="navbarMenu">
                     <ul class="navbar-nav">
-                        <li class="nav-item <?php echo $current_page === 'index' ? 'active' : ''; ?>">
-                            <a href="<?php echo url(); ?>" class="nav-link">Home</a>
-                        </li>
-                        
                         <li class="nav-item dropdown <?php echo in_array($current_page, ['about', 'mission-vision', 'history', 'administration']) ? 'active' : ''; ?>">
                             <a href="#" class="nav-link dropdown-toggle">About</a>
                             <ul class="dropdown-menu">
@@ -97,16 +93,23 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                             </ul>
                         </li>
                         
-                        <li class="nav-item <?php echo $current_page === 'programs' ? 'active' : ''; ?>">
+                        <li class="nav-item dropdown <?php echo in_array($current_page, ['admission-policy', 'scholarships']) ? 'active' : ''; ?>">
+                            <a href="#" class="nav-link dropdown-toggle">Admission</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo url('pages/admission-policy.php'); ?>">Admission Policy</a></li>
+                                <li><a href="<?php echo url('pages/scholarships.php'); ?>">Scholarships</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item <?php echo in_array($current_page, ['programs', 'program-detail']) ? 'active' : ''; ?>">
                             <a href="<?php echo url('pages/programs.php'); ?>" class="nav-link">Programs</a>
                         </li>
-                        
-                        <li class="nav-item dropdown <?php echo in_array($current_page, ['facilities', 'organizations', 'achievements']) ? 'active' : ''; ?>">
+                        <li class="nav-item dropdown <?php echo in_array($current_page, ['facilities', 'organizations', 'achievements', 'gallery']) ? 'active' : ''; ?>">
                             <a href="#" class="nav-link dropdown-toggle">Campus</a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo url('pages/facilities.php'); ?>">Facilities</a></li>
                                 <li><a href="<?php echo url('pages/organizations.php'); ?>">Organizations</a></li>
                                 <li><a href="<?php echo url('pages/achievements.php'); ?>">Achievements</a></li>
+                                <li><a href="<?php echo url('pages/gallery.php'); ?>">Gallery</a></li>
                             </ul>
                         </li>
                         
@@ -116,10 +119,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                         
                         <li class="nav-item <?php echo $current_page === 'events' ? 'active' : ''; ?>">
                             <a href="<?php echo url('pages/events.php'); ?>" class="nav-link">Events</a>
-                        </li>
-                        
-                        <li class="nav-item <?php echo $current_page === 'gallery' ? 'active' : ''; ?>">
-                            <a href="<?php echo url('pages/gallery.php'); ?>" class="nav-link">Gallery</a>
                         </li>
                         
                         <li class="nav-item <?php echo $current_page === 'contact' ? 'active' : ''; ?>">

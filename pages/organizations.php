@@ -49,13 +49,6 @@ try {
     $stmt = $db->prepare($sql);
     $stmt->execute($params);
     $organizations = $stmt->fetchAll();
-    // Fix image paths for all organizations
-    foreach ($organizations as &$org) {
-        if (!empty($org['logo'])) {
-            $org['logo'] = asset($org['logo']);
-        }
-    }
-    unset($org); // Break reference
 
 } catch (Exception $e) {
     error_log("Organizations query error: " . $e->getMessage());
@@ -111,7 +104,7 @@ $pageTitle = 'Student Organizations - ' . SITE_NAME;
     ?>
     
     <!-- Page Header -->
-    <section class="page-header">
+       <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
@@ -160,9 +153,9 @@ $pageTitle = 'Student Organizations - ' . SITE_NAME;
                         <div class="org-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
                             <div class="org-logo">
                                 <?php if (!empty($org['logo'])): ?>
-                                    <img src="<?php echo htmlspecialchars($org['logo']); ?>" 
+                                    <img src="<?php echo getImageUrl($org['logo']); ?>" 
                                          alt="<?php echo htmlspecialchars($org['org_name']); ?>"
-                                         onerror="this.src='https://via.placeholder.com/150/003f87/ffffff?text=<?php echo urlencode(substr($org['org_name'], 0, 2)); ?>'">
+                                         onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=\'org-logo-placeholder\'><i class=\'fas <?php echo $categories[$org['category']]['icon']; ?>\'></i></div>';">
                                 <?php else: ?>
                                     <div class="org-logo-placeholder">
                                         <i class="fas <?php echo $categories[$org['category']]['icon']; ?>"></i>
@@ -275,7 +268,6 @@ $pageTitle = 'Student Organizations - ' . SITE_NAME;
 /* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
     margin-bottom: 3rem;
@@ -287,7 +279,7 @@ $pageTitle = 'Student Organizations - ' . SITE_NAME;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 
@@ -362,9 +354,11 @@ $pageTitle = 'Student Organizations - ' . SITE_NAME;
     color: var(--color-dark-gray);
     font-weight: 600;
     transition: all var(--transition-base);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.tab-btn i {
+    display: none;
 }
 
 .tab-btn:hover,
@@ -375,7 +369,40 @@ $pageTitle = 'Student Organizations - ' . SITE_NAME;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
+/* No Results - Centered */
+.no-results {
+    max-width: 600px;
+    margin: 4rem auto;
+    text-align: center;
+    padding: 4rem 3rem;
+}
 
+.no-results i {
+    font-size: 5rem;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+}
+
+.no-results h3 {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.no-results p {
+    font-size: 1.125rem;
+    color: var(--color-gray);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.no-results .btn {
+    padding: 0.875rem 2rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+}
 /* Organizations Grid */
 .organizations-grid {
     display: grid;

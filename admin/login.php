@@ -107,7 +107,9 @@ $csrf_token = generateCSRFToken();
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #003f87, #002855);
+            background: linear-gradient(rgba(0, 40, 85, 0.7), rgba(0, 63, 135, 0.7)), 
+                        url('../assets/images/school.png') no-repeat center center fixed;
+            background-size: cover;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -145,9 +147,9 @@ $csrf_token = generateCSRFToken();
         
         /* Logo container */
         .login-logo {
-            width: 120px;                /* Adjust the container size */
+            width: 120px;                
             height: 120px;
-            margin: 0 auto 20px;         /* Center horizontally and space below */
+            margin: 0 auto 20px;        
             display: flex;
             align-items: center;
             justify-content: center;
@@ -384,10 +386,10 @@ $csrf_token = generateCSRFToken();
             
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                toggleIcon.textContent = '🙈';
+                toggleIcon.textContent = 'Hide';
             } else {
                 passwordInput.type = 'password';
-                toggleIcon.textContent = '👁️';
+                toggleIcon.textContent = 'Show';
             }
         }
         

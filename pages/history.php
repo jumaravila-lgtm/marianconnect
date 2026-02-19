@@ -56,52 +56,12 @@ try {
 $pageTitle = !empty($page['meta_title']) ? $page['meta_title'] : $page['title'] . ' - ' . SITE_NAME;
 $metaDescription = !empty($page['meta_description']) ? $page['meta_description'] : 'Discover the rich heritage of SMCC';
 
-// Historical Timeline (can be managed via database later)
-$timeline = [
-    [
-        'year' => '1950',
-        'title' => 'Foundation',
-        'description' => 'St. Mary\'s College of Catbalogan was established by the Sisters of Charity, bringing Catholic education to Samar.',
-        'icon' => 'fa-flag'
-    ],
-    [
-        'year' => '1965',
-        'title' => 'Expansion',
-        'description' => 'The college expanded its facilities and introduced new academic programs to meet growing demand.',
-        'icon' => 'fa-building'
-    ],
-    [
-        'year' => '1980',
-        'title' => 'Recognition',
-        'description' => 'SMCC received full accreditation and recognition as one of the leading institutions in Eastern Visayas.',
-        'icon' => 'fa-award'
-    ],
-    [
-        'year' => '2000',
-        'title' => 'Modernization',
-        'description' => 'Introduction of computer laboratories and modern teaching facilities marked the digital transformation.',
-        'icon' => 'fa-laptop'
-    ],
-    [
-        'year' => '2015',
-        'title' => 'Excellence Achievement',
-        'description' => 'Multiple programs achieved Level III accreditation, recognizing our commitment to quality education.',
-        'icon' => 'fa-trophy'
-    ],
-    [
-        'year' => '2025',
-        'title' => 'Continuing Legacy',
-        'description' => 'Today, SMCC continues to provide quality Catholic education while embracing innovation and progress.',
-        'icon' => 'fa-rocket'
-    ]
-];
-
 // Milestones
 $milestones = [
-    ['number' => '75+', 'label' => 'Years of Excellence'],
-    ['number' => '10,000+', 'label' => 'Alumni Worldwide'],
-    ['number' => '3,500+', 'label' => 'Current Students'],
-    ['number' => '150+', 'label' => 'Dedicated Faculty']
+    ['number' => '0', 'label' => 'Years of Excellence'],
+    ['number' => '0', 'label' => 'Alumni Worldwide'],
+    ['number' => '0+', 'label' => 'Current Students'],
+    ['number' => '0', 'label' => 'Dedicated Faculty']
 ];
 ?>
 <!DOCTYPE html>
@@ -147,7 +107,7 @@ $milestones = [
     ?>
     
     <!-- Page Header -->
-    <section class="page-header">
+       <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
@@ -189,39 +149,13 @@ $milestones = [
         </div>
     </section>
     
-    <!-- Timeline Section -->
-    <section class="timeline-section section-padding bg-light">
-        <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
-                <h2 class="section-title">Our Journey Through Time</h2>
-                <p class="section-subtitle">Key milestones in our 75+ years of educational excellence</p>
-            </div>
-            
-            <div class="timeline">
-                <?php foreach ($timeline as $index => $item): ?>
-                    <div class="timeline-item <?php echo $index % 2 == 0 ? 'timeline-left' : 'timeline-right'; ?>" 
-                         data-aos="<?php echo $index % 2 == 0 ? 'fade-right' : 'fade-left'; ?>">
-                        <div class="timeline-content">
-                            <div class="timeline-icon">
-                                <i class="fas <?php echo $item['icon']; ?>"></i>
-                            </div>
-                            <div class="timeline-year"><?php echo htmlspecialchars($item['year']); ?></div>
-                            <h3><?php echo htmlspecialchars($item['title']); ?></h3>
-                            <p><?php echo htmlspecialchars($item['description']); ?></p>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-    
     <!-- Legacy Section -->
-    <section class="legacy-section section-padding">
+    <section class="legacy-section section-padding bg-light">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6" data-aos="fade-right">
                     <div class="legacy-image">
-                        <img src="<?php echo asset('images/placeholder-legacy.jpg'); ?>" 
+                        <img src="<?php echo asset('images/school.png'); ?>" 
                         alt="SMCC Legacy" 
                         class="img-fluid rounded shadow"
                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect fill=%22%23003f87%22 width=%22600%22 height=%22400%22/%3E%3Ctext fill=%22%23ffffff%22 font-family=%22Arial%22 font-size=%2228%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ESMCC Legacy%3C/text%3E%3C/svg%3E'">
@@ -243,14 +177,14 @@ $milestones = [
     </section>
     
     <!-- Related Pages -->
-    <section class="related-pages-section section-padding bg-light">
+    <section class="related-pages-section section-padding">
         <div class="container">
             <div class="section-header text-center" data-aos="fade-up">
                 <h2 class="section-title">Explore More</h2>
             </div>
             
-            <div class="row g-4">
-                <div class="col-md-4" data-aos="fade-up">
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-4 col-sm-12" data-aos="fade-up">
                     <div class="related-page-card">
                         <div class="card-icon">
                             <i class="fas fa-eye"></i>
@@ -260,7 +194,7 @@ $milestones = [
                         <a href="mission-vision.php" class="card-link">Learn More →</a>
                     </div>
                 </div>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-4 col-md-4 col-sm-12" data-aos="fade-up" data-aos-delay="100">
                     <div class="related-page-card">
                         <div class="card-icon">
                             <i class="fas fa-users-cog"></i>
@@ -270,7 +204,7 @@ $milestones = [
                         <a href="administration.php" class="card-link">Learn More →</a>
                     </div>
                 </div>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-4 col-md-4 col-sm-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="related-page-card">
                         <div class="card-icon">
                             <i class="fas fa-trophy"></i>
@@ -305,7 +239,6 @@ $milestones = [
     /* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
     margin-bottom: 3rem;
@@ -317,7 +250,7 @@ $milestones = [
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 
@@ -358,6 +291,7 @@ $milestones = [
     opacity: 1;
     font-weight: 600;
 }
+
 /* History Intro */
 .history-intro {
     margin-bottom: 4rem;
@@ -396,127 +330,6 @@ $milestones = [
     opacity: 0.95;
 }
 
-/* Timeline */
-.timeline {
-    position: relative;
-    max-width: 1000px;
-    margin: 3rem auto;
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
-    border-radius: 2px;
-}
-
-.timeline-item {
-    position: relative;
-    width: 50%;
-    padding: 2rem;
-    margin-bottom: 3rem;
-}
-
-.timeline-left {
-    left: 0;
-    padding-right: 4rem;
-}
-
-.timeline-right {
-    left: 50%;
-    padding-left: 4rem;
-}
-
-.timeline-content {
-    background: var(--color-white);
-    padding: 2rem;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    position: relative;
-    transition: all var(--transition-base);
-}
-
-.timeline-content:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
-}
-
-.timeline-left .timeline-content::after {
-    content: '';
-    position: absolute;
-    right: -15px;
-    top: 30px;
-    width: 0;
-    height: 0;
-    border-left: 15px solid var(--color-white);
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-}
-
-.timeline-right .timeline-content::after {
-    content: '';
-    position: absolute;
-    left: -15px;
-    top: 30px;
-    width: 0;
-    height: 0;
-    border-right: 15px solid var(--color-white);
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-}
-
-.timeline-icon {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: var(--color-white);
-    box-shadow: var(--shadow-lg);
-    border: 4px solid var(--color-white);
-}
-
-.timeline-left .timeline-icon {
-    right: -4rem;
-    top: 2rem;
-}
-
-.timeline-right .timeline-icon {
-    left: -4rem;
-    top: 2rem;
-}
-
-.timeline-year {
-    display: inline-block;
-    background: var(--color-secondary);
-    color: var(--color-dark-gray);
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius-md);
-    font-weight: 700;
-    font-size: 1.125rem;
-    margin-bottom: 1rem;
-}
-
-.timeline-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--color-primary);
-}
-
-.timeline-content p {
-    color: var(--color-gray);
-    line-height: 1.6;
-    margin-bottom: 0;
-}
-
 /* Legacy Section */
 .legacy-section {
     padding: 4rem 0;
@@ -543,37 +356,79 @@ $milestones = [
     color: var(--color-gray);
 }
 
+/* Related Pages Section */
+.related-pages-section {
+    background: var(--color-light-bg);
+    padding: 3rem 0;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.related-page-card {
+    background: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    text-align: center;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+    height: 100%;
+}
+
+.related-page-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    color: var(--color-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 1rem;
+}
+
+.related-page-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-primary);
+}
+
+.related-page-card p {
+    color: var(--color-gray);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.card-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+.card-link:hover {
+    color: var(--color-primary-dark);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    .timeline::before {
-        left: 30px;
-    }
-    
-    .timeline-item {
-        width: 100%;
-        padding-left: 80px;
-        padding-right: 0;
-    }
-    
-    .timeline-left,
-    .timeline-right {
-        left: 0;
-        padding-right: 0;
-        padding-left: 80px;
-    }
-    
-    .timeline-left .timeline-content::after,
-    .timeline-right .timeline-content::after {
-        left: -15px;
-        right: auto;
-        border-right: 15px solid var(--color-white);
-        border-left: none;
-    }
-    
-    .timeline-left .timeline-icon,
-    .timeline-right .timeline-icon {
-        left: 0;
-        right: auto;
+    .page-title {
+        font-size: 2rem;
     }
     
     .milestone-number {
@@ -582,6 +437,14 @@ $milestones = [
     
     .legacy-content {
         margin-top: 2rem;
+    }
+    
+    .legacy-content h2 {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
     }
 }
 </style>

@@ -128,7 +128,7 @@ $pageTitle = 'Contact Us - ' . SITE_NAME;
     ?>
     
     <!-- Page Header -->
-    <section class="page-header">
+       <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
@@ -361,10 +361,9 @@ $pageTitle = 'Contact Us - ' . SITE_NAME;
     /* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
-    margin-bottom: 3rem;
+    margin-bottom: 0;
 }
 
 .page-header-overlay {
@@ -373,7 +372,7 @@ $pageTitle = 'Contact Us - ' . SITE_NAME;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 
@@ -416,8 +415,8 @@ $pageTitle = 'Contact Us - ' . SITE_NAME;
 }
 /* Contact Info Cards */
 .contact-info-section {
-    padding-top: 0;
-    margin-top: -3rem;
+    padding-top: 3rem;
+    margin-top: 0;
     position: relative;
     z-index: 10;
 }

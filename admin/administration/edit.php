@@ -405,98 +405,151 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
 </script>
 
 <style>
+/* Page Header */
 .page-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--admin-border);
 }
 
-.page-header h1 {
+.page-header > div:first-child h1 {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--admin-text);
+    margin: 0 0 0.5rem 0;
 }
 
 .subtitle {
     color: var(--admin-text-muted);
-    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    margin: 0;
 }
 
 .page-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
 }
 
+/* Buttons */
 .btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background: var(--admin-primary);
-    color: white;
     border: none;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 500;
+    font-size: 0.95rem;
     transition: all 0.3s;
     cursor: pointer;
 }
 
-.btn:hover {
+.btn-primary {
+    background: var(--admin-primary);
+    color: white;
+}
+
+.btn-primary:hover {
     background: var(--admin-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 63, 135, 0.25);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--admin-primary);
+    border: 2px solid var(--admin-border);
+}
+
+.btn-secondary:hover {
+    background: var(--admin-primary);
+    color: white;
+    border-color: var(--admin-primary);
     transform: translateY(-2px);
     box-shadow: var(--admin-shadow-lg);
 }
 
-.btn-secondary {
-    background: #6c757d;
-}
-
-.btn-secondary:hover {
-    background: #5a6268;
-}
-
 .btn-info {
-    background: var(--admin-info);
+    background: white;
+    color: var(--admin-info);
+    border: 2px solid var(--admin-info);
 }
 
 .btn-info:hover {
-    background: #138496;
+    background: var(--admin-info);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(23, 162, 184, 0.25);
 }
 
 .btn-danger {
-    background: var(--admin-danger);
+    background: white;
+    color: var(--admin-danger);
+    border: 2px solid var(--admin-danger);
 }
 
 .btn-danger:hover {
-    background: #c82333;
+    background: var(--admin-danger);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.25);
 }
 
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Form Grid Layout */
 .form-grid {
     display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 2rem;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    align-items: start;
 }
 
+/* Form Cards */
 .form-card {
     background: white;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 2rem;
     margin-bottom: 1.5rem;
-    box-shadow: var(--admin-shadow);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+    transition: all 0.3s;
+}
+
+.form-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .form-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
+    padding-bottom: 1rem;
     border-bottom: 2px solid var(--admin-border);
+    color: var(--admin-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
+.form-card h3::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--admin-primary);
+    border-radius: 2px;
+}
+
+/* Form Groups */
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 
 .form-group:last-child {
@@ -505,79 +558,127 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin-bottom: 0.625rem;
+    font-weight: 600;
+    font-size: 0.9rem;
     color: var(--admin-text);
 }
 
 .form-group label.required::after {
     content: ' *';
     color: var(--admin-danger);
+    font-weight: 700;
 }
 
+/* Form Controls */
 .form-control {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.875rem 1rem;
     border: 2px solid var(--admin-border);
     border-radius: 8px;
     font-size: 0.95rem;
-    transition: all 0.3s;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-control:hover {
+    border-color: #c5cdd8;
 }
 
 .form-control:focus {
     outline: none;
     border-color: var(--admin-primary);
-    box-shadow: 0 0 0 3px rgba(0, 63, 135, 0.1);
+    box-shadow: 0 0 0 4px rgba(0, 63, 135, 0.08);
 }
 
+textarea.form-control {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.6;
+}
+
+input[type="number"].form-control {
+    appearance: textfield;
+}
+
+input[type="number"].form-control::-webkit-inner-spin-button,
+input[type="number"].form-control::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Form Text Helper */
 .form-text {
     display: block;
     margin-top: 0.5rem;
-    font-size: 0.85rem;
+    font-size: 0.825rem;
     color: var(--admin-text-muted);
+    line-height: 1.4;
 }
 
+/* Checkbox */
 .checkbox-label {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.625rem;
     cursor: pointer;
-    font-weight: 400;
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.checkbox-label:hover {
+    background: var(--admin-hover);
 }
 
 .checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
+    accent-color: var(--admin-primary);
 }
 
+/* Current Image */
 .current-image {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid var(--admin-border);
 }
 
 .current-image img {
     width: 100%;
-    border-radius: 8px;
     display: block;
+    border-radius: 8px;
 }
 
 .btn-remove-current {
-    margin-top: 0.5rem;
     width: 100%;
-    padding: 0.5rem;
-    background: var(--admin-danger);
-    color: white;
-    border: none;
-    border-radius: 6px;
+    padding: 0.75rem;
+    background: white;
+    color: var(--admin-danger);
+    border: 2px solid var(--admin-danger);
+    border-radius: 0 0 8px 8px;
     cursor: pointer;
     transition: all 0.3s;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .btn-remove-current:hover {
-    background: #c82333;
+    background: var(--admin-danger);
+    color: white;
+    transform: translateY(-2px);
 }
 
+/* Image Upload Area */
 .image-upload-area {
     position: relative;
     border: 2px dashed var(--admin-border);
@@ -586,6 +687,7 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
+    background: #fafbfc;
 }
 
 .image-upload-area:hover {
@@ -597,25 +699,42 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    pointer-events: none;
 }
 
 .upload-placeholder i {
     font-size: 3rem;
     color: var(--admin-text-muted);
+    opacity: 0.7;
+}
+
+.upload-placeholder p {
+    font-weight: 600;
+    color: var(--admin-text);
+    margin: 0;
+}
+
+.upload-placeholder small {
+    color: var(--admin-text-muted);
+    font-size: 0.825rem;
 }
 
 .file-input {
     display: none;
 }
 
+/* Image Preview */
 .image-preview {
     position: relative;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .image-preview img {
     width: 100%;
     height: auto;
+    display: block;
     border-radius: 8px;
 }
 
@@ -623,54 +742,111 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     background: var(--admin-danger);
     color: white;
-    border: none;
+    border: 2px solid white;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .remove-image:hover {
     transform: scale(1.1);
+    background: #c82333;
 }
 
+/* Form Actions */
 .form-actions {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.btn-block {
-    width: 100%;
-    justify-content: center;
+/* Sidebar Sticky */
+.form-sidebar {
+    position: sticky;
+    top: 2rem;
 }
 
+/* Alert Styling */
 .alert {
-    padding: 1rem;
+    padding: 1rem 1.25rem;
     border-radius: 8px;
     margin-bottom: 1.5rem;
+    border-left: 4px solid;
 }
 
 .alert-danger {
-    background: #ffebee;
-    border: 1px solid #ef5350;
-    color: #c62828;
+    background: #f8d7da;
+    color: #721c24;
+    border-left-color: #dc3545;
+}
+
+.alert strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
 }
 
 .alert ul {
-    margin: 0;
-    padding-left: 1.5rem;
+    margin: 0.5rem 0 0 1.5rem;
+    padding-left: 0;
 }
 
+.alert li {
+    margin: 0.25rem 0;
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
     .form-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .form-sidebar {
+        position: static;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .page-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        flex: 1;
+        min-width: 140px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-card {
+        padding: 1.5rem;
+    }
+    
+    .page-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .page-header > div:first-child h1 {
+        font-size: 1.5rem;
     }
 }
 </style>

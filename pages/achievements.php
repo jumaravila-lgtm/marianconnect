@@ -68,13 +68,6 @@ try {
     $stmt = $db->prepare($sql);
     $stmt->execute($params);
     $achievements = $stmt->fetchAll();
-    // Fix image paths for all achievements
-    foreach ($achievements as &$achievement) {
-        if (!empty($achievement['featured_image'])) {
-            $achievement['featured_image'] = asset($achievement['featured_image']);
-        }
-    }
-    unset($achievement); // Break reference
 
 } catch (Exception $e) {
     error_log("Achievements query error: " . $e->getMessage());
@@ -139,7 +132,7 @@ $pageTitle = 'Achievements - ' . SITE_NAME;
     ?>
     
     <!-- Page Header -->
-    <section class="page-header">
+       <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
@@ -188,9 +181,9 @@ $pageTitle = 'Achievements - ' . SITE_NAME;
                         <div class="achievement-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
                             <?php if (!empty($achievement['featured_image'])): ?>
                                 <div class="achievement-image">
-                                    <img src="<?php echo htmlspecialchars($achievement['featured_image']); ?>" 
+                                    <img src="<?php echo getImageUrl($achievement['featured_image']); ?>" 
                                          alt="<?php echo htmlspecialchars($achievement['title']); ?>"
-                                         onerror="this.src='https://via.placeholder.com/400x300/003f87/ffffff?text=Achievement'">
+                                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23003f87%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%23ffffff%22 font-family=%22Arial%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ENo Image%3C/text%3E%3C/svg%3E'">
                                 </div>
                             <?php endif; ?>
                             
@@ -288,17 +281,8 @@ $pageTitle = 'Achievements - ' . SITE_NAME;
                         <div class="stat-icon">
                             <i class="fas fa-trophy"></i>
                         </div>
-                        <div class="stat-number">100+</div>
+                        <div class="stat-number">0</div>
                         <div class="stat-label">Awards & Recognitions</div>
-                    </div>
-                </div>
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label">International Achievements</div>
                     </div>
                 </div>
                 <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
@@ -306,7 +290,7 @@ $pageTitle = 'Achievements - ' . SITE_NAME;
                         <div class="stat-icon">
                             <i class="fas fa-flag"></i>
                         </div>
-                        <div class="stat-number">50+</div>
+                        <div class="stat-number">0</div>
                         <div class="stat-label">National Championships</div>
                     </div>
                 </div>
@@ -315,7 +299,7 @@ $pageTitle = 'Achievements - ' . SITE_NAME;
                         <div class="stat-icon">
                             <i class="fas fa-medal"></i>
                         </div>
-                        <div class="stat-number">200+</div>
+                        <div class="stat-number">0</div>
                         <div class="stat-label">Student Awardees</div>
                     </div>
                 </div>
@@ -344,7 +328,6 @@ $pageTitle = 'Achievements - ' . SITE_NAME;
 /* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
     margin-bottom: 3rem;
@@ -356,7 +339,7 @@ $pageTitle = 'Achievements - ' . SITE_NAME;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 

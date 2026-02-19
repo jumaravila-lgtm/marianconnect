@@ -119,15 +119,13 @@ $core_values = [
     ?>
     
     <!-- Page Header -->
-    <section class="page-header">
+       <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
                 <h1 class="page-title"><?php echo htmlspecialchars($page['title']); ?></h1>
                 <nav class="breadcrumb">
                     <a href="<?php echo url(); ?>">Home</a>
-                    <span class="separator">/</span>
-                    <a href="about.php">About Us</a>
                     <span class="separator">/</span>
                     <span class="current"><?php echo htmlspecialchars($page['title']); ?></span>
                 </nav>
@@ -246,10 +244,9 @@ $core_values = [
 /* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
-    margin-bottom: 3rem;
+    margin-bottom: 0;
 }
 
 .page-header-overlay {
@@ -258,7 +255,7 @@ $core_values = [
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 
@@ -299,9 +296,11 @@ $core_values = [
     opacity: 1;
     font-weight: 600;
 }
+
 /* Mission & Vision Content */
 .mission-vision-content {
     margin-bottom: 4rem;
+    margin-top: 0;
 }
 
 .content-wrapper {
@@ -318,7 +317,7 @@ $core_values = [
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 3px solid var(--color-secondary);
-    display: inline-block;
+    text-align: center;
 }
 
 .content-wrapper h2:first-child {
@@ -330,28 +329,20 @@ $core_values = [
     color: var(--color-dark-gray);
     margin-bottom: 1.5rem;
     font-size: 1.0625rem;
+    text-align: justify;
 }
 
+.content-wrapper ol,
 .content-wrapper ul {
-    list-style: none;
-    padding-left: 0;
+    padding-left: 2rem;
     margin-bottom: 2rem;
 }
 
+.content-wrapper ol li,
 .content-wrapper ul li {
-    padding-left: 2rem;
-    position: relative;
     margin-bottom: 1rem;
     line-height: 1.8;
-}
-
-.content-wrapper ul li:before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: var(--color-primary);
-    font-weight: 700;
-    font-size: 1.25rem;
+    color: var(--color-dark-gray);
 }
 
 /* Core Values Section */
@@ -444,16 +435,46 @@ $core_values = [
     flex-wrap: wrap;
 }
 
-.btn-outline-primary {
+/* CTA Buttons Styling */
+.cta-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2.5rem;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid;
+    font-size: 1.0625rem;
+}
+
+/* View Programs Button - Yellow by default, White on hover */
+.cta-buttons .btn-primary {
+    background: var(--color-white);
+    color: var(--color-primary);
+}
+
+.cta-buttons .btn-primary:hover {
+    background: #ffc107;
+    color: var(--color-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(255, 193, 7, 0.3);
+}
+
+/* Contact Us Button - White outline by default, Yellow on hover */
+.cta-buttons .btn-outline-primary {
     background-color: transparent;
     color: var(--color-white);
     border-color: var(--color-white);
 }
 
-.btn-outline-primary:hover {
-    background-color: var(--color-white);
+.cta-buttons .btn-outline-primary:hover {
+    background-color: #ffc107;
     color: var(--color-primary);
-    border-color: var(--color-white);
+    border-color: #ffc107;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(255, 193, 7, 0.3);
 }
 
 /* Related Pages */

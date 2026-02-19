@@ -61,7 +61,9 @@ include '../includes/admin-header.php';
         <a href="seo-settings.php?id=<?php echo $id; ?>" class="btn btn-secondary">
             <i class="fas fa-search"></i> SEO Settings
         </a>
-        <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        <a href="index.php" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
     </div>
 </div>
 
@@ -124,6 +126,20 @@ include '../includes/admin-header.php';
             </div>
             
             <div class="form-card">
+                <h3>Meta Info</h3>
+                <div class="meta-info">
+                    <div class="meta-item">
+                        <span class="meta-label">Created:</span>
+                        <span class="meta-value"><?php echo date('M d, Y', strtotime($page['created_at'])); ?></span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Updated:</span>
+                        <span class="meta-value"><?php echo date('M d, Y', strtotime($page['updated_at'])); ?></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-card">
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary btn-block">
                         <i class="fas fa-save"></i> Update Page
@@ -138,35 +154,347 @@ include '../includes/admin-header.php';
 </form>
 
 <style>
-.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
-.header-actions{display:flex;gap:0.75rem}
-.form-grid{display:grid;grid-template-columns:1fr 350px;gap:2rem}
-.form-card{background:white;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--admin-shadow)}
-.form-card h3{font-size:1.1rem;font-weight:600;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:2px solid var(--admin-border)}
-.form-group{margin-bottom:1.5rem}
-.form-group label{display:block;margin-bottom:0.5rem;font-weight:500}
-.form-group label.required::after{content:' *';color:var(--admin-danger)}
-.form-control{width:100%;padding:0.75rem 1rem;border:2px solid var(--admin-border);border-radius:8px}
-.form-control:focus{outline:none;border-color:var(--admin-primary);box-shadow:0 0 0 3px rgba(0,63,135,0.1)}
-.form-text{display:block;margin-top:0.5rem;font-size:0.85rem;color:var(--admin-text-muted)}
-.checkbox-label{display:flex;align-items:center;gap:0.5rem;cursor:pointer}
-.checkbox-label input{width:18px;height:18px}
-.form-actions{display:flex;flex-direction:column;gap:0.75rem}
-.btn-block{width:100%;justify-content:center}
-.info-item{padding:0.75rem 0;border-bottom:1px solid var(--admin-border);font-size:0.9rem}
-.info-item:last-child{border-bottom:none}
-.info-item strong{display:block;margin-bottom:0.5rem;color:var(--admin-text)}
-.info-item code{background:#f5f5f5;padding:0.25rem 0.5rem;border-radius:4px;font-size:0.85rem}
-.badge-type{background:#e3f2fd;color:#1976d2;padding:0.35rem 0.75rem;border-radius:6px;font-size:0.85rem;font-weight:500}
-.alert{padding:1rem;border-radius:8px;margin-bottom:1.5rem}
-.alert-danger{background:#ffebee;border:1px solid #ef5350;color:#c62828}
-.alert ul{margin:0;padding-left:1.5rem}
-.btn{padding:0.6rem 1.25rem;border:none;border-radius:8px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;transition:all 0.2s}
-.btn-primary{background:var(--admin-primary);color:white}
-.btn-primary:hover{background:#004a99;transform:translateY(-2px)}
-.btn-secondary{background:#6c757d;color:white}
-.btn-secondary:hover{background:#5a6268}
-@media(max-width:1024px){.form-grid{grid-template-columns:1fr}}
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.page-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--admin-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--admin-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 63, 135, 0.25);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--admin-primary);
+    border: 2px solid var(--admin-border);
+}
+
+.btn-secondary:hover {
+    background: var(--admin-primary);
+    color: white;
+    border-color: var(--admin-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--admin-shadow-lg);
+}
+
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Form Grid Layout */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* Form Cards */
+.form-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+    transition: all 0.3s;
+}
+
+.form-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--admin-border);
+    color: var(--admin-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-card h3::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--admin-primary);
+    border-radius: 2px;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 1.75rem;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.625rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--admin-text);
+}
+
+.form-group label.required::after {
+    content: ' *';
+    color: var(--admin-danger);
+    font-weight: 700;
+}
+
+/* Form Controls */
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--admin-border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-control:hover {
+    border-color: #c5cdd8;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 4px rgba(0, 63, 135, 0.08);
+}
+
+/* Form Text Helper */
+.form-text {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.825rem;
+    color: var(--admin-text-muted);
+    line-height: 1.4;
+}
+
+/* Checkbox */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.checkbox-label:hover {
+    background: var(--admin-hover);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--admin-primary);
+}
+
+/* Info Items */
+.info-item {
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--admin-border);
+    font-size: 0.9rem;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-item strong {
+    display: block;
+    color: var(--admin-text-muted);
+    font-weight: 600;
+    font-size: 0.825rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.info-item code {
+    background: #f5f5f5;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--admin-text);
+    font-weight: 500;
+}
+
+.badge-type {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* Meta Information */
+.meta-info {
+    font-size: 0.9rem;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--admin-border);
+}
+
+.meta-item:last-child {
+    margin-bottom: 0;
+}
+
+.meta-label {
+    color: var(--admin-text-muted);
+    font-weight: 600;
+    font-size: 0.825rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.meta-value {
+    color: var(--admin-text);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Sidebar Sticky */
+.form-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+/* Alert Styling */
+.alert {
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border-left-color: #dc3545;
+}
+
+.alert ul {
+    margin: 0.5rem 0 0 1.5rem;
+    padding-left: 0;
+}
+
+.alert li {
+    margin: 0.25rem 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-sidebar {
+        position: static;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        flex: 1;
+        min-width: 140px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-card {
+        padding: 1.5rem;
+    }
+    
+    .header-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
 </style>
 
 <!-- TinyMCE WYSIWYG Editor -->

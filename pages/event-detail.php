@@ -46,10 +46,6 @@ try {
         header("Location: events.php");
         exit;
     }
-    // Fix image path for the main event
-    if (!empty($event['featured_image'])) {
-        $event['featured_image'] = asset($event['featured_image']);
-    }
 } catch (Exception $e) {
     error_log("Event fetch error: " . $e->getMessage());
     header("Location: events.php");
@@ -66,13 +62,6 @@ try {
     ");
     $related_stmt->execute([$event['category'], $slug]);
     $related_events = $related_stmt->fetchAll();
-    // Fix image paths for related events
-    foreach ($related_events as &$related) {
-        if (!empty($related['featured_image'])) {
-            $related['featured_image'] = asset($related['featured_image']);
-        }
-    }
-    unset($related);
 } catch (Exception $e) {
     $related_events = [];
 }
@@ -195,9 +184,9 @@ $pageTitle = htmlspecialchars($event['title']) . ' - Events - ' . SITE_NAME;
                         <!-- Featured Image -->
                         <?php if (!empty($event['featured_image'])): ?>
                             <div class="event-image">
-                                <img src="<?php echo htmlspecialchars($event['featured_image']); ?>" 
+                                <img src="<?php echo getImageUrl($event['featured_image']); ?>" 
                                      alt="<?php echo htmlspecialchars($event['title']); ?>"
-                                     onerror="this.src='https://via.placeholder.com/800x400/003f87/ffffff?text=Event'">
+                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22%3E%3Crect fill=%22%23003f87%22 width=%22800%22 height=%22400%22/%3E%3Ctext fill=%22%23ffffff%22 font-family=%22Arial%22 font-size=%2228%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ENo Image%3C/text%3E%3C/svg%3E'">
                             </div>
                         <?php endif; ?>
                         

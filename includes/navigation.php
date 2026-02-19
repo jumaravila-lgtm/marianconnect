@@ -37,44 +37,66 @@ $base_url = getBaseUrl();
     <!-- Home -->
     <li class="nav-item <?php echo isActive('index', $current_page); ?>">
         <a href="<?php echo $base_url; ?>" class="nav-link">
-            <i class="fas fa-home"></i> Home
+            Home
         </a>
     </li>
     
     <!-- About Us Dropdown -->
     <li class="nav-item dropdown <?php echo isActive(['about', 'mission-vision', 'history', 'administration'], $current_page); ?>">
         <a href="#" class="nav-link dropdown-toggle">
-            <i class="fas fa-info-circle"></i> About Us
+            About Us
         </a>
         <ul class="dropdown-menu">
             <li>
                 <a href="<?php echo $base_url; ?>pages/about.php" class="<?php echo isActive('about', $current_page); ?>">
-                    <i class="fas fa-university"></i> About SMCC
+                    About SMCC
                 </a>
             </li>
             <li>
                 <a href="<?php echo $base_url; ?>pages/mission-vision.php" class="<?php echo isActive('mission-vision', $current_page); ?>">
-                    <i class="fas fa-eye"></i> Mission & Vision
+                    Mission & Vision
                 </a>
             </li>
             <li>
                 <a href="<?php echo $base_url; ?>pages/history.php" class="<?php echo isActive('history', $current_page); ?>">
-                    <i class="fas fa-history"></i> History
+                    History
                 </a>
             </li>
             <li>
                 <a href="<?php echo $base_url; ?>pages/administration.php" class="<?php echo isActive('administration', $current_page); ?>">
-                    <i class="fas fa-users-cog"></i> Administration
+                    Administration
                 </a>
             </li>
         </ul>
     </li>
     
-    <!-- Academic Programs -->
-    <li class="nav-item <?php echo isActive('programs', $current_page); ?>">
-        <a href="<?php echo $base_url; ?>pages/programs.php" class="nav-link">
-            <i class="fas fa-graduation-cap"></i> Programs
+    <!-- Admission Dropdown (NEW - Programs moved here) -->
+    <li class="nav-item dropdown <?php echo isActive(['admission-policy', 'enrollment-process', 'programs', 'program-detail', 'scholarships'], $current_page); ?>">
+        <a href="#" class="nav-link dropdown-toggle">
+            Admission
         </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="<?php echo $base_url; ?>pages/admission-policy.php" class="<?php echo isActive('admission-policy', $current_page); ?>">
+                    Admission Policy
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $base_url; ?>pages/enrollment-process.php" class="<?php echo isActive('enrollment-process', $current_page); ?>">
+                    Enrollment Process
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $base_url; ?>pages/programs.php" class="<?php echo isActive(['programs', 'program-detail'], $current_page); ?>">
+                    Academic Programs
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $base_url; ?>pages/scholarships.php" class="<?php echo isActive('scholarships', $current_page); ?>">
+                    Scholarships
+                </a>
+            </li>
+        </ul>
     </li>
     
     <!-- Campus Life Dropdown -->

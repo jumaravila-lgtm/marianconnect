@@ -9,12 +9,12 @@ if (!defined('SITE_NAME')) {
 ?>
 
 <footer class="main-footer">
-    <!-- Footer Top -->
+<!-- Footer Top -->
     <div class="footer-top section-padding">
         <div class="container">
             <div class="row g-4">
                 <!-- About Column -->
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="footer-widget">
                         <div class="footer-logo">
                             <img src="<?php echo asset('images/logo/logo-white.png'); ?>" alt="<?php echo escapeHtml(SITE_NAME); ?>">
@@ -32,25 +32,25 @@ if (!defined('SITE_NAME')) {
                             
                             if (!empty($facebook)): ?>
                                 <a href="<?php echo escapeUrl($facebook); ?>" target="_blank" rel="noopener" title="Facebook">
-                                    <i class="icon-facebook"></i>
+                                    <i class="fab fa-facebook-f"></i>
                                 </a>
                             <?php endif;
                             
                             if (!empty($twitter)): ?>
                                 <a href="<?php echo escapeUrl($twitter); ?>" target="_blank" rel="noopener" title="Twitter">
-                                    <i class="icon-twitter"></i>
+                                    <i class="fab fa-twitter"></i>
                                 </a>
                             <?php endif;
                             
                             if (!empty($instagram)): ?>
                                 <a href="<?php echo escapeUrl($instagram); ?>" target="_blank" rel="noopener" title="Instagram">
-                                    <i class="icon-instagram"></i>
+                                    <i class="fab fa-instagram"></i>
                                 </a>
                             <?php endif;
                             
                             if (!empty($youtube)): ?>
                                 <a href="<?php echo escapeUrl($youtube); ?>" target="_blank" rel="noopener" title="YouTube">
-                                    <i class="icon-youtube"></i>
+                                    <i class="fab fa-youtube"></i>
                                 </a>
                             <?php endif; ?>
                         </div>
@@ -58,7 +58,7 @@ if (!defined('SITE_NAME')) {
                 </div>
 
                 <!-- Quick Links Column -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="footer-widget">
                         <h3 class="footer-title">Quick Links</h3>
                         <ul class="footer-links">
@@ -80,21 +80,21 @@ if (!defined('SITE_NAME')) {
                         <h3 class="footer-title">Contact Information</h3>
                         <ul class="footer-contact">
                             <li>
-                                <i class="icon-location"></i>
+                                <i class="fas fa-map-marker-alt"></i>
                                 <div>
                                     <strong>Address:</strong>
                                     <p><?php echo escapeHtml(getSiteSetting('contact_address', 'Catbalogan City, Samar, Philippines')); ?></p>
                                 </div>
                             </li>
                             <li>
-                                <i class="icon-phone"></i>
+                                <i class="fas fa-phone"></i>
                                 <div>
                                     <strong>Phone:</strong>
                                     <p><?php echo escapeHtml(getSiteSetting('contact_phone', '(055) 251-2345')); ?></p>
                                 </div>
                             </li>
                             <li>
-                                <i class="icon-email"></i>
+                                <i class="fas fa-envelope"></i>
                                 <div>
                                     <strong>Email:</strong>
                                     <p><a href="mailto:<?php echo getSiteSetting('contact_email', 'info@smcc.edu.ph'); ?>">
@@ -103,7 +103,7 @@ if (!defined('SITE_NAME')) {
                                 </div>
                             </li>
                             <li>
-                                <i class="icon-clock"></i>
+                                <i class="fas fa-clock"></i>
                                 <div>
                                     <strong>Office Hours:</strong>
                                     <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
@@ -146,12 +146,30 @@ if (!defined('SITE_NAME')) {
 <style>
 /* Footer Styles */
 .main-footer {
+    position: relative;
     background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     color: var(--color-white);
 }
 
-.footer-top {
-    padding: 3rem 0 2rem;
+.main-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('<?php echo asset('images/school.png'); ?>');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    z-index: 0;
+}
+
+.footer-top,
+.footer-bottom {
+    position: relative;
+    z-index: 1;
 }
 
 .footer-widget {

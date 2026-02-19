@@ -49,13 +49,6 @@ try {
     $stmt = $db->prepare($sql);
     $stmt->execute($params);
     $facilities = $stmt->fetchAll();
-    // Fix image paths for all facilities
-    foreach ($facilities as &$facility) {
-        if (!empty($facility['featured_image'])) {
-            $facility['featured_image'] = asset($facility['featured_image']);
-        }
-    }
-    unset($facility); // Break reference
 
 } catch (Exception $e) {
     error_log("Facilities query error: " . $e->getMessage());
@@ -112,7 +105,7 @@ $pageTitle = 'Facilities - ' . SITE_NAME;
     ?>
     
     <!-- Page Header -->
-    <section class="page-header">
+       <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
@@ -162,14 +155,9 @@ $pageTitle = 'Facilities - ' . SITE_NAME;
                     <?php foreach ($facilities as $index => $facility): ?>
                         <div class="facility-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
                             <div class="facility-image">
-                                <?php if (!empty($facility['featured_image'])): ?>
-                                    <img src="<?php echo htmlspecialchars($facility['featured_image']); ?>" 
-                                         alt="<?php echo htmlspecialchars($facility['name']); ?>"
-                                         onerror="this.src='https://via.placeholder.com/400x300/003f87/ffffff?text=Facility'">
-                                <?php else: ?>
-                                    <img src="https://via.placeholder.com/400x300/003f87/ffffff?text=<?php echo urlencode($facility['name']); ?>" 
-                                         alt="<?php echo htmlspecialchars($facility['name']); ?>">
-                                <?php endif; ?>
+                                <img src="<?php echo getImageUrl($facility['featured_image']); ?>" 
+                                     alt="<?php echo htmlspecialchars($facility['name']); ?>"
+                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23003f87%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%23ffffff%22 font-family=%22Arial%22 font-size=%2224%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ENo Image%3C/text%3E%3C/svg%3E'">
                                 <div class="facility-category">
                                     <i class="fas <?php echo $categories[$facility['category']]['icon'] ?? 'fa-building'; ?>"></i>
                                 </div>
@@ -299,7 +287,6 @@ $pageTitle = 'Facilities - ' . SITE_NAME;
     /* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
     margin-bottom: 3rem;
@@ -311,7 +298,7 @@ $pageTitle = 'Facilities - ' . SITE_NAME;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 
@@ -380,10 +367,9 @@ $pageTitle = 'Facilities - ' . SITE_NAME;
 
 .category-btn {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1.5rem 1rem;
+    justify-content: center;
+    padding: 1rem 1.5rem;
     background: var(--color-white);
     border: 2px solid var(--color-light-gray);
     border-radius: var(--border-radius-lg);
@@ -391,11 +377,11 @@ $pageTitle = 'Facilities - ' . SITE_NAME;
     font-weight: 600;
     transition: all var(--transition-base);
     text-align: center;
+    text-decoration: none;
 }
 
 .category-btn i {
-    font-size: 2rem;
-    color: var(--color-primary);
+    display: none; /* Hide icons */
 }
 
 .category-btn:hover,

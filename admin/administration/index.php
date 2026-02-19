@@ -59,24 +59,18 @@ include '../includes/admin-header.php';
 
 <div class="page-header">
     <h1>Administration Management</h1>
-    <div class="page-actions">
-        <a href="create.php" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add New Member
-        </a>
-    </div>
+    <a href="create.php" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Member</a>
 </div>
 
 <!-- Stats -->
-<div class="stats-grid-horizontal">
+<div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-icon" style="background:#e3f2fd;color:#1976d2"><i class="fas fa-users"></i></div>
         <div class="stat-content">
             <div class="stat-value"><?php echo $stats['total']; ?></div>
             <div class="stat-label">Total Members</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon" style="background:#e8f5e9;color:#388e3c"><i class="fas fa-check-circle"></i></div>
         <div class="stat-content">
             <div class="stat-value"><?php echo $stats['active']; ?></div>
             <div class="stat-label">Active</div>
@@ -84,20 +78,13 @@ include '../includes/admin-header.php';
     </div>
 </div>
 
-<!-- Filters -->
-<div class="filters-card">
-    <form method="GET" action="" class="filters-form">
-        <div class="filter-group">
-            <label>Search:</label>
-            <div class="search-box">
-                <input type="text" name="search" placeholder="Search by name, position, or email..." value="<?php echo escapeHtml($search); ?>">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </div>
+<div class="search-section">
+    <label>Search:</label>
+    <form method="GET" action="">
+        <div class="search-box">
+            <input type="text" name="search" placeholder="Search by name, position, or email..." value="<?php echo escapeHtml($search ?? ''); ?>" class="search-input">
+            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
         </div>
-
-        <?php if (!empty($search)): ?>
-        <a href="index.php" class="btn-clear-filters">Clear Filters</a>
-        <?php endif; ?>
     </form>
 </div>
 
@@ -107,7 +94,7 @@ include '../includes/admin-header.php';
 </div>
 
 <!-- Administration Table -->
-<div class="content-card">
+<div class="table-card">
     <div class="table-responsive">
         <table class="data-table">
             <thead>
@@ -170,10 +157,10 @@ include '../includes/admin-header.php';
                         </td>
                         <td>
                             <div class="action-buttons">
-                                <a href="edit.php?id=<?php echo $member['admin_member_id']; ?>" class="btn-icon" title="Edit">
+                                <a href="edit.php?id=<?php echo $member['admin_member_id']; ?>" class="btn-action btn-edit" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="delete.php?id=<?php echo $member['admin_member_id']; ?>" class="btn-icon btn-danger" title="Delete">
+                                <a href="delete.php?id=<?php echo $member['admin_member_id']; ?>" class="btn-action btn-delete" title="Delete">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
@@ -216,48 +203,55 @@ include '../includes/admin-header.php';
 </div>
 
 <style>
+/* Page Header */
 .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--admin-border);
 }
 
 .page-header h1 {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--admin-text);
+    margin: 0;
 }
 
-.page-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
+/* Buttons */
 .btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
+    padding: 0.875rem 1.75rem;
     background: var(--admin-primary);
     color: white;
     border: none;
     border-radius: 8px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.95rem;
     transition: all 0.3s;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 63, 135, 0.15);
 }
 
 .btn:hover {
     background: var(--admin-primary-dark);
     transform: translateY(-2px);
-    box-shadow: var(--admin-shadow-lg);
+    box-shadow: 0 6px 12px rgba(0, 63, 135, 0.25);
 }
 
-.stats-grid-horizontal {
+.btn-primary {
+    background: var(--admin-primary);
+}
+
+/* Statistics Grid */
+.stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
@@ -265,146 +259,132 @@ include '../includes/admin-header.php';
 .stat-card {
     background: white;
     border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: var(--admin-shadow);
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+    transition: all 0.3s;
 }
 
-.stat-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
+.stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.stat-content {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
+    flex-direction: column;
 }
 
 .stat-value {
     font-size: 2rem;
     font-weight: 700;
     color: var(--admin-text);
+    line-height: 1;
+    margin-bottom: 0.25rem;
 }
 
 .stat-label {
     font-size: 0.9rem;
     color: var(--admin-text-muted);
+    font-weight: 500;
 }
 
-.filters-card {
+/* Search Section */
+.search-section {
     background: white;
-    padding: 1.5rem;
+    padding: 1.75rem;
     border-radius: 12px;
     margin-bottom: 1.5rem;
-    box-shadow: var(--admin-shadow);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
 }
 
-.filters-form {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    align-items: flex-end;
-}
-
-.filter-group {
-    flex: 1;
-    min-width: 300px;
-}
-
-.filter-group label {
+.search-section label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
     font-size: 0.875rem;
+    color: var(--admin-text);
 }
 
 .search-box {
     position: relative;
+    display: flex;
+    gap: 0;
 }
 
-.search-box input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--admin-border);
-    border-radius: 6px;
-    font-size: 0.9rem;
+.search-input {
+    flex: 1;
+    padding: 0.875rem 1rem;
+    padding-right: 3rem;
+    border: 2px solid var(--admin-border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s;
 }
 
-.search-box button {
+.search-input:hover {
+    border-color: #c5cdd8;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 4px rgba(0, 63, 135, 0.08);
+}
+
+.search-btn {
     position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    padding: 0 1rem;
-    background: none;
-    border: none;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.5rem 1rem;
+    background: transparent;
     color: var(--admin-text-muted);
-    cursor: pointer;
-}
-
-.btn-clear-filters {
-    padding: 0.75rem 1.5rem;
-    background: var(--admin-hover);
-    color: var(--admin-text);
+    border: none;
     border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: background 0.3s;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
 }
 
-.btn-clear-filters:hover {
-    background: var(--admin-border);
+.search-btn:hover {
+    color: var(--admin-primary);
+    background: #f8f9fa;
 }
 
+/* Results Summary */
 .results-summary {
     margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid var(--admin-primary);
+}
+
+.results-summary p {
     color: var(--admin-text-muted);
     font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
 }
 
-.content-card {
+/* Table Card */
+.table-card {
     background: white;
     border-radius: 12px;
-    box-shadow: var(--admin-shadow);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
     overflow: hidden;
 }
-
-.table-responsive {
-    overflow-x: auto;
-}
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.data-table thead {
-    background: var(--admin-hover);
-}
-
-.data-table th {
-    padding: 1rem;
-    text-align: left;
-    font-weight: 600;
-    color: var(--admin-text);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.data-table td {
-    padding: 1rem;
-    border-bottom: 1px solid var(--admin-border);
-    vertical-align: middle;
-}
-
+/* Table Image Styles */
 .table-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 6px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--admin-border);
 }
 
 .table-image img {
@@ -416,127 +396,208 @@ include '../includes/admin-header.php';
 .no-image {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--admin-primary), var(--admin-primary-light));
+    background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-weight: 700;
+    color: var(--admin-text-muted);
     font-size: 1.25rem;
+    font-weight: 600;
 }
 
-.badge {
-    display: inline-block;
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
+/* Text Utilities */
+.text-muted {
+    color: var(--admin-text-muted);
+}
+/* Data Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-bottom: 2px solid var(--admin-border);
+}
+
+.data-table th {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    font-weight: 700;
     font-size: 0.8rem;
-    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--admin-text);
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--admin-border);
+    vertical-align: middle;
+}
+
+.data-table tbody tr {
+    transition: all 0.3s;
+}
+
+.data-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* Member Image */
+.member-image {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--admin-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.member-image-placeholder {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--admin-text-muted);
+    font-size: 1.25rem;
+    font-weight: 600;
+    border: 2px solid var(--admin-border);
+}
+
+/* Member Info */
+.member-name {
+    font-weight: 600;
+    color: var(--admin-text);
+    font-size: 0.95rem;
+}
+
+.member-position {
+    color: var(--admin-text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.badge-order {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    color: #1565c0;
+    min-width: 40px;
+    justify-content: center;
 }
 
 .badge-active {
-    background: #e8f5e9;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
     color: #2e7d32;
 }
 
 .badge-inactive {
-    background: #ffebee;
+    background: linear-gradient(135deg, #ffebee, #ffcdd2);
     color: #c62828;
 }
 
-.badge-order {
-    background: #e3f2fd;
-    color: #1976d2;
-    font-weight: 600;
-}
-
-.text-muted {
-    color: var(--admin-text-muted);
-}
-
+/* Action Buttons */
 .action-buttons {
     display: flex;
     gap: 0.5rem;
     justify-content: center;
 }
 
-.btn-icon {
-    width: 32px;
-    height: 32px;
+.btn-action {
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 6px;
-    background: var(--admin-hover);
-    color: var(--admin-text);
+    border-radius: 8px;
     text-decoration: none;
     transition: all 0.3s;
+    border: 2px solid transparent;
 }
 
-.btn-icon:hover {
+.btn-edit {
+    background: #f8f9fa;
+    color: var(--admin-text);
+}
+
+.btn-edit:hover {
     background: var(--admin-primary);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 63, 135, 0.25);
 }
 
-.btn-icon.btn-danger:hover {
+.btn-delete {
+    background: #f8f9fa;
+    color: var(--admin-text);
+}
+
+.btn-delete:hover {
     background: var(--admin-danger);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.25);
 }
 
+/* Empty State */
 .empty-state {
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     text-align: center;
 }
 
 .empty-state i {
-    font-size: 4rem;
-    color: var(--admin-border);
-    margin-bottom: 1rem;
+    font-size: 5rem;
+    color: #dee2e6;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
 }
 
 .empty-state p {
     color: var(--admin-text-muted);
-    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    margin: 0;
 }
 
-.text-center {
-    text-align: center;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1.5rem;
-    border-top: 1px solid var(--admin-border);
-}
-
-.page-numbers {
-    display: flex;
-    gap: 0.25rem;
-}
-
-.page-link {
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    background: var(--admin-hover);
-    color: var(--admin-text);
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.page-link:hover {
-    background: var(--admin-primary);
-    color: white;
-}
-
-.page-link.active {
-    background: var(--admin-primary);
-    color: white;
-}
-
-.page-dots {
-    padding: 0.5rem;
-    color: var(--admin-text-muted);
+/* Responsive */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .data-table {
+        font-size: 0.85rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 0.875rem 0.5rem;
+    }
 }
 </style>
 

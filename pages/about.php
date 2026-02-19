@@ -63,7 +63,7 @@ try {
         'years_of_excellence' => 75,
         'total_students' => 3500,
         'faculty_members' => 150,
-        'academic_programs' => 20
+        'academic_programs' => 11
     ];
 } catch (Exception $e) {
     $stats = [];
@@ -115,7 +115,7 @@ try {
     <?php include '../includes/header.php'; ?>
     
     <!-- Page Header / Breadcrumb -->
-    <section class="page-header">
+       <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
@@ -140,32 +140,6 @@ try {
                             <?php echo $page['content']; ?>
                         </div>
                     </article>
-                    
-                    <!-- Additional Info Boxes -->
-                    <div class="info-boxes" data-aos="fade-up" data-aos-delay="100">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="info-box">
-                                    <div class="info-icon">
-                                        <i class="fas fa-eye"></i>
-                                    </div>
-                                    <h3>Our Vision</h3>
-                                    <p>To be a premier Catholic educational institution in the region.</p>
-                                    <a href="<?php echo url('pages/mission-vision.php'); ?>" class="info-link">Learn More →</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="info-box">
-                                    <div class="info-icon">
-                                        <i class="fas fa-history"></i>
-                                    </div>
-                                    <h3>Our History</h3>
-                                    <p>Discover our rich heritage and journey of excellence.</p>
-                                    <a href="<?php echo url('pages/history.php'); ?>" class="info-link">Learn More →</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- Sidebar -->
@@ -188,7 +162,7 @@ try {
                                     <i class="fas fa-users"></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-number"><?php echo number_format($stats['total_students']); ?>+</div>
+                                    <div class="stat-number"><?php echo number_format($stats['total_students']); ?></div>
                                     <div class="stat-label">Students</div>
                                 </div>
                             </div>
@@ -197,7 +171,7 @@ try {
                                     <i class="fas fa-chalkboard-teacher"></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-number"><?php echo $stats['faculty_members']; ?>+</div>
+                                    <div class="stat-number"><?php echo $stats['faculty_members']; ?></div>
                                     <div class="stat-label">Faculty Members</div>
                                 </div>
                             </div>
@@ -206,7 +180,7 @@ try {
                                     <i class="fas fa-graduation-cap"></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-number"><?php echo $stats['academic_programs']; ?>+</div>
+                                    <div class="stat-number"><?php echo $stats['academic_programs']; ?></div>
                                     <div class="stat-label">Programs</div>
                                 </div>
                             </div>
@@ -253,7 +227,6 @@ try {
 /* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
     margin-bottom: 3rem;
@@ -265,7 +238,7 @@ try {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 
@@ -292,6 +265,7 @@ try {
     color: var(--color-white);
     opacity: 0.8;
     transition: opacity var(--transition-base);
+    text-decoration: none;
 }
 
 .breadcrumb a:hover {
@@ -307,76 +281,59 @@ try {
     font-weight: 600;
 }
 
-/* Content Article */
+/* Main Content Area - Clean & Simple like SPSPS */
+.page-content {
+    padding: 3rem 0;
+}
+
 .content-article {
     background: var(--color-white);
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
     margin-bottom: 2rem;
 }
 
 .article-body {
     line-height: 1.8;
-    color: var(--color-dark-gray);
+    color: #333;
+    font-size: 1rem;
 }
 
 .article-body p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+    text-align: justify;
 }
 
-.article-body h2,
+.article-body h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
 .article-body h3 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
 }
 
-/* Info Boxes */
-.info-boxes {
-    margin-top: 2rem;
+.article-body ul,
+.article-body ol {
+    margin-bottom: 1.25rem;
+    padding-left: 2rem;
 }
 
-.info-box {
-    background: var(--color-white);
-    padding: 2rem;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
-    height: 100%;
-}
-
-.info-box:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
-}
-
-.info-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: var(--color-white);
-    margin-bottom: 1rem;
-}
-
-.info-box h3 {
-    font-size: 1.25rem;
+.article-body li {
     margin-bottom: 0.5rem;
 }
 
-.info-link {
-    color: var(--color-primary);
+.article-body strong {
     font-weight: 600;
-    transition: all var(--transition-base);
-}
-
-.info-link:hover {
-    color: var(--color-primary-light);
-    transform: translateX(5px);
+    color: var(--color-primary);
 }
 
 /* Sidebar Widgets */
@@ -384,16 +341,17 @@ try {
     background: var(--color-white);
     padding: 1.5rem;
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
 }
 
 .widget-title {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--color-light-gray);
+    border-bottom: 2px solid #e5e7eb;
+    color: var(--color-primary);
 }
 
 /* Stats List */
@@ -408,8 +366,14 @@ try {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: var(--color-off-white);
+    background: #f9fafb;
     border-radius: var(--border-radius-md);
+    transition: all 0.3s ease;
+}
+
+.stat-item-small:hover {
+    background: #f3f4f6;
+    transform: translateX(5px);
 }
 
 .stat-item-small .stat-icon {
@@ -422,43 +386,48 @@ try {
     justify-content: center;
     color: var(--color-white);
     font-size: 1.25rem;
+    flex-shrink: 0;
 }
 
 .stat-item-small .stat-number {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-primary);
+    line-height: 1;
 }
 
 .stat-item-small .stat-label {
     font-size: 0.875rem;
-    color: var(--color-gray);
+    color: #6b7280;
+    margin-top: 0.25rem;
 }
 
 /* Related Links */
 .related-links {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .related-links li {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
 }
 
 .related-links a {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    color: var(--color-dark-gray);
-    transition: all var(--transition-base);
+    gap: 0.75rem;
+    padding: 0.75rem;
+    color: #374151;
+    transition: all 0.3s ease;
     border-radius: var(--border-radius-sm);
+    text-decoration: none;
 }
 
 .related-links a:hover {
-    background: var(--color-off-white);
+    background: #f9fafb;
     color: var(--color-primary);
-    padding-left: 1rem;
+    padding-left: 1.25rem;
 }
 
 .related-links i {
@@ -473,19 +442,41 @@ try {
     text-align: center;
 }
 
+.cta-widget .widget-title {
+    color: var(--color-white);
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
 .cta-widget h3 {
     color: var(--color-white);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .cta-widget p {
     opacity: 0.9;
     margin-bottom: 1.5rem;
+    line-height: 1.6;
+} 
+
+/* Contact Us Button - White by default, Yellow on hover */
+.btn-primary {
+    background: #ffffff !important; /* White background - force override */
+    color: #003f87 !important; /* Dark blue text - force override */
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border: 2px solid #ffffff;
 }
 
-.btn-block {
-    display: block;
-    width: 100%;
+.btn-primary:hover {
+    background: #ffc107 !important; /* Yellow on hover - force override */
+    color: #003f87 !important;
+    border-color: #ffc107;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
 }
 
 /* Responsive */
@@ -498,9 +489,18 @@ try {
         padding: 1.5rem;
     }
     
+    .article-body {
+        font-size: 0.95rem;
+    }
+    
     .col-md-4,
     .col-md-8 {
         flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .sidebar-widget {
+        margin-top: 1rem;
     }
 }
 </style>

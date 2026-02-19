@@ -24,14 +24,12 @@ include '../includes/admin-header.php';
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-icon" style="background:#e3f2fd;color:#1976d2"><i class="fas fa-file-alt"></i></div>
         <div class="stat-content">
             <div class="stat-value"><?php echo $stats['total']; ?></div>
             <div class="stat-label">Total Pages</div>
         </div>
     </div>
     <div class="stat-card">
-        <div class="stat-icon" style="background:#e8f5e9;color:#388e3c"><i class="fas fa-check-circle"></i></div>
         <div class="stat-content">
             <div class="stat-value"><?php echo $stats['published']; ?></div>
             <div class="stat-label">Published</div>
@@ -49,20 +47,7 @@ include '../includes/admin-header.php';
 <div class="pages-grid">
     <?php foreach ($pages as $page): ?>
     <div class="page-card <?php echo !$page['is_published'] ? 'unpublished' : ''; ?>">
-        <div class="page-icon">
-            <?php
-            $icons = [
-                'about' => 'fas fa-info-circle',
-                'mission_vision' => 'fas fa-bullseye',
-                'history' => 'fas fa-history',
-                'administration' => 'fas fa-users-cog',
-                'contact' => 'fas fa-envelope',
-                'custom' => 'fas fa-file'
-            ];
-            ?>
-            <i class="<?php echo $icons[$page['page_type']] ?? 'fas fa-file'; ?>"></i>
-        </div>
-        
+    
         <div class="page-content">
             <div class="page-header-inline">
                 <h3 class="page-title"><?php echo escapeHtml($page['title']); ?></h3>
@@ -107,34 +92,264 @@ include '../includes/admin-header.php';
 </div>
 
 <style>
-.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem}
-.stat-card{background:white;border-radius:12px;padding:1.5rem;box-shadow:var(--admin-shadow);display:flex;gap:1rem;align-items:center}
-.stat-icon{width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
-.stat-value{font-size:2rem;font-weight:700;color:var(--admin-text)}
-.stat-label{font-size:0.9rem;color:var(--admin-text-muted)}
-.info-box{background:#e3f2fd;border-left:4px solid #1976d2;padding:1rem 1.5rem;border-radius:8px;margin-bottom:2rem;display:flex;gap:1rem;align-items:center}
-.info-box i{color:#1976d2;font-size:1.5rem}
-.pages-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:1.5rem}
-.page-card{background:white;border-radius:12px;padding:1.5rem;box-shadow:var(--admin-shadow);display:flex;flex-direction:column;gap:1rem;transition:transform 0.2s}
-.page-card:hover{transform:translateY(-4px);box-shadow:0 8px 16px rgba(0,0,0,0.1)}
-.page-card.unpublished{opacity:0.7;border:2px dashed #ff9800}
-.page-icon{width:60px;height:60px;background:#e3f2fd;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#1976d2}
-.page-content{flex:1}
-.page-header-inline{display:flex;align-items:center;gap:1rem;margin-bottom:0.75rem}
-.page-title{font-size:1.25rem;font-weight:600;margin:0}
-.page-meta{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;font-size:0.85rem}
-.meta-item{color:var(--admin-text-muted);display:flex;align-items:center;gap:0.5rem}
-.meta-item strong{color:var(--admin-text)}
-.page-excerpt{color:var(--admin-text-muted);line-height:1.5;margin:0}
-.badge{display:inline-block;padding:0.35rem 0.75rem;border-radius:6px;font-size:0.8rem;font-weight:500}
-.badge-published{background:#e8f5e9;color:#2e7d32}
-.badge-draft{background:#fff3e0;color:#f57c00}
-.page-actions{display:flex;gap:0.75rem}
-.btn{padding:0.75rem 1.5rem;border:none;border-radius:8px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;text-decoration:none;transition:all 0.2s;width:100%}
-.btn-primary{background:var(--admin-primary);color:white}
-.btn-primary:hover{background:#004a99;transform:translateY(-2px)}
-@media(max-width:768px){.pages-grid{grid-template-columns:1fr}}
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.page-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    margin: 0;
+}
+
+/* Statistics Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--admin-text-muted);
+    font-weight: 500;
+}
+
+/* Info Box */
+.info-box {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f8fafd 100%);
+    border-left: 4px solid var(--admin-primary);
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.info-box i {
+    color: var(--admin-primary);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.info-box strong {
+    color: var(--admin-text);
+    font-weight: 600;
+}
+
+.info-box div {
+    color: var(--admin-text-muted);
+    line-height: 1.5;
+}
+
+/* Pages Grid */
+.pages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Page Card */
+.page-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: all 0.3s;
+}
+
+.page-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.page-card.unpublished {
+    opacity: 0.75;
+    border: 2px dashed #ff9800;
+    background: #fffbf5;
+}
+
+/* Page Content */
+.page-content {
+    flex: 1;
+}
+
+.page-header-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.page-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* Page Meta */
+.page-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+}
+
+.meta-item {
+    color: var(--admin-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.meta-item i {
+    width: 16px;
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+.meta-item strong {
+    color: var(--admin-primary);
+    font-weight: 600;
+}
+
+/* Page Excerpt */
+.page-excerpt {
+    color: var(--admin-text-muted);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.badge-published {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    color: #2e7d32;
+}
+
+.badge-draft {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    color: #e65100;
+}
+
+/* Page Actions */
+.page-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 63, 135, 0.15);
+}
+
+.btn-primary {
+    background: var(--admin-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--admin-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 63, 135, 0.25);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .pages-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pages-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .page-header-inline {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
 </style>
 
 <?php include '../includes/admin-footer.php'; ?>

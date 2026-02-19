@@ -130,81 +130,109 @@ include '../includes/admin-header.php';
 </div>
 
 <style>
+/* Page Header */
 .page-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--admin-border);
 }
 
 .page-header h1 {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--admin-text);
+    margin: 0;
 }
 
-.page-actions {
-    display: flex;
-    gap: 0.5rem;
-}
+/* Delete Container - Centered Layout with Gradient Background */
 .delete-container {
-    max-width: 700px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 200px);
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
 }
 
 .delete-card {
     background: white;
-    border-radius: 12px;
-    padding: 2.5rem;
-    box-shadow: var(--admin-shadow);
+    border-radius: 16px;
+    padding: 3rem;
+    max-width: 650px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
     text-align: center;
+    border: 1px solid var(--admin-border);
 }
 
+/* Delete Icon with Pulse Animation */
 .delete-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 1.5rem;
-    background: #fff3cd;
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 2.75rem;
+    margin: 0 auto 2rem;
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+    animation: pulse 2s infinite;
 }
 
-.delete-icon i {
-    font-size: 2.5rem;
-    color: #856404;
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 28px rgba(220, 53, 69, 0.4);
+    }
 }
 
 .delete-card h2 {
-    font-size: 1.75rem;
-    font-weight: 600;
+    font-size: 1.85rem;
+    font-weight: 700;
     margin-bottom: 1rem;
     color: var(--admin-text);
 }
 
 .delete-message {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--admin-text-muted);
     margin-bottom: 2rem;
+    line-height: 1.6;
 }
 
+/* Announcement Preview Section */
 .announcement-preview {
-    background: #f8f9fa;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
     border: 2px solid var(--admin-border);
-    border-radius: 8px;
-    padding: 1.5rem;
+    border-radius: 12px;
+    padding: 2rem;
     margin-bottom: 2rem;
     text-align: left;
+    transition: all 0.3s;
 }
 
+.announcement-preview:hover {
+    border-color: var(--admin-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Preview Items Grid Layout */
 .preview-item {
     display: grid;
     grid-template-columns: 140px 1fr;
     gap: 1rem;
     padding: 0.75rem 0;
-    border-bottom: 1px solid var(--admin-border);
+    border-bottom: 1px solid #dee2e6;
+    align-items: center;
 }
 
 .preview-item:last-child {
@@ -218,91 +246,190 @@ include '../includes/admin-header.php';
 .preview-item strong {
     color: var(--admin-text);
     font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .preview-item span {
-    color: var(--admin-text-muted);
+    color: var(--admin-text);
+    font-weight: 500;
+    font-size: 0.95rem;
 }
 
 .preview-content {
     margin-top: 0.5rem;
-    padding: 1rem;
+    padding: 1.25rem;
     background: white;
-    border-radius: 6px;
-    line-height: 1.6;
-    color: var(--admin-text);
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    line-height: 1.7;
+    color: #495057;
+    font-size: 0.9rem;
 }
 
+/* Badges - Styled with Colors Like News Delete */
 .badge {
     display: inline-block;
     padding: 0.35rem 0.75rem;
     border-radius: 6px;
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
 }
 
-.badge-general { background: #e3f2fd; color: #1565c0; }
-.badge-urgent { background: #ffebee; color: #c62828; }
-.badge-academic { background: #f3e5f5; color: #6a1b9a; }
-.badge-event { background: #e8f5e9; color: #2e7d32; }
+/* Type Badges */
+.badge-general {
+    background: #e3f2fd;
+    color: #1565c0;
+}
 
-.badge-priority-low { background: #f1f8e9; color: #558b2f; }
-.badge-priority-medium { background: #fff3e0; color: #ef6c00; }
-.badge-priority-high { background: #ffebee; color: #c62828; }
+.badge-urgent {
+    background: #ffebee;
+    color: #c62828;
+}
 
-.badge-active { background: #e8f5e9; color: #2e7d32; }
-.badge-inactive { background: #fafafa; color: #757575; }
+.badge-academic {
+    background: #f3e5f5;
+    color: #7b1fa2;
+}
 
+.badge-event {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* Priority Badges */
+.badge-priority-low {
+    background: #f5f5f5;
+    color: #757575;
+}
+
+.badge-priority-medium {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.badge-priority-high {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* Status Badges */
+.badge-active {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-inactive {
+    background: #fafafa;
+    color: #9e9e9e;
+}
+
+/* Warning Message */
+.warning-message {
+    background: linear-gradient(135deg, #fff3cd 0%, #fffaed 100%);
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    color: #856404;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.15);
+}
+
+.warning-message strong {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+}
+
+.warning-message strong::before {
+    font-size: 1.2rem;
+}
+
+/* Delete Actions */
 .delete-actions {
     display: flex;
     gap: 1rem;
     justify-content: center;
-    margin-top: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .btn {
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
     text-decoration: none;
-    transition: all 0.2s;
+    min-width: 160px;
+    justify-content: center;
 }
 
 .btn-secondary {
-    background: #6c757d;
-    color: white;
+    background: white;
+    color: var(--admin-primary);
+    border: 2px solid var(--admin-primary);
 }
 
 .btn-secondary:hover {
-    background: #5a6268;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    background: var(--admin-primary);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 63, 135, 0.25);
 }
 
 .btn-danger {
-    background: #dc3545;
+    background: var(--admin-danger);
     color: white;
+    border: 2px solid var(--admin-danger);
 }
 
 .btn-danger:hover {
     background: #c82333;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(220,53,69,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(220, 53, 69, 0.35);
 }
 
-@media (max-width: 768px) {
+.btn i {
+    font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .delete-container {
+        padding: 1rem;
+    }
+    
     .delete-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .delete-card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .delete-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+    
+    .announcement-preview {
         padding: 1.5rem;
     }
     
     .preview-item {
         grid-template-columns: 1fr;
         gap: 0.5rem;
+        padding: 0.5rem 0;
     }
     
     .delete-actions {
@@ -311,7 +438,6 @@ include '../includes/admin-header.php';
     
     .btn {
         width: 100%;
-        justify-content: center;
     }
 }
 </style>

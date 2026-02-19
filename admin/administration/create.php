@@ -355,16 +355,54 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
 </script>
 
 <style>
+/* ═══════════════════════════════════════════════════════════════
+   UPDATED STYLING FOR ADMINISTRATION CREATE.PHP
+   (To match announcements/create.php styling)
+   Replace the <style> section in your create.php with this
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── PAGE HEADER ─── */
 .page-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.page-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--admin-text);
+    margin: 0;
 }
 
 .subtitle {
     color: var(--admin-text-muted);
     margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.page-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* ─── BUTTONS ─── */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s;
 }
 
 .btn-secondary {
@@ -372,9 +410,9 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background: #6c757d;
-    color: white;
-    border: none;
+    background: white;
+    color: var(--admin-primary);
+    border: 2px solid var(--admin-border);
     border-radius: 8px;
     text-decoration: none;
     font-weight: 500;
@@ -383,35 +421,88 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
 }
 
 .btn-secondary:hover {
-    background: #5a6268;
+    background: var(--admin-primary);
+    color: white;
+    border-color: var(--admin-primary);
     transform: translateY(-2px);
-    box-shadow: var(--admin-shadow-lg);
+    box-shadow: 0 8px 16px rgba(0, 63, 135, 0.25);
 }
 
+.btn-primary {
+    padding: 1rem 1.5rem;
+    background: var(--admin-primary);
+    color: white;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.btn-primary:hover {
+    background: var(--admin-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 63, 135, 0.25);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+/* ─── FORM LAYOUT ─── */
 .form-grid {
     display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 2rem;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    align-items: start;
 }
 
+.form-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+/* ─── FORM CARDS ─── */
 .form-card {
     background: white;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 2rem;
     margin-bottom: 1.5rem;
-    box-shadow: var(--admin-shadow);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--admin-border);
+    transition: all 0.3s;
+}
+
+.form-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .form-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
+    padding-bottom: 1rem;
     border-bottom: 2px solid var(--admin-border);
+    color: var(--admin-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
+.form-card h3::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--admin-primary);
+    border-radius: 2px;
+}
+
+/* ─── FORM GROUPS ─── */
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 
 .form-group:last-child {
@@ -420,52 +511,62 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin-bottom: 0.625rem;
+    font-weight: 600;
+    font-size: 0.9rem;
     color: var(--admin-text);
 }
 
 .form-group label.required::after {
     content: ' *';
     color: var(--admin-danger);
+    font-weight: 700;
 }
 
+/* ─── FORM CONTROLS ─── */
 .form-control {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.875rem 1rem;
     border: 2px solid var(--admin-border);
     border-radius: 8px;
     font-size: 0.95rem;
-    transition: all 0.3s;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: white;
+    box-sizing: border-box;
+}
+
+.form-control:hover {
+    border-color: #c5cdd8;
 }
 
 .form-control:focus {
     outline: none;
     border-color: var(--admin-primary);
-    box-shadow: 0 0 0 3px rgba(0, 63, 135, 0.1);
+    box-shadow: 0 0 0 4px rgba(0, 63, 135, 0.08);
 }
 
-.form-text {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 0.85rem;
+.form-control::placeholder {
     color: var(--admin-text-muted);
 }
 
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    font-weight: 400;
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
 }
 
-.checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
+input[type="number"].form-control {
+    appearance: textfield;
 }
 
+input[type="number"].form-control::-webkit-outer-spin-button,
+input[type="number"].form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ─── IMAGE UPLOAD ─── */
 .image-upload-area {
     position: relative;
     border: 2px dashed var(--admin-border);
@@ -474,23 +575,42 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
+    background: #fafbfc;
 }
 
 .image-upload-area:hover {
     border-color: var(--admin-primary);
-    background: var(--admin-hover);
+    background: #f0f4ff;
+    transform: translateY(-2px);
 }
 
 .upload-placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
 }
 
 .upload-placeholder i {
     font-size: 3rem;
     color: var(--admin-text-muted);
+    transition: all 0.3s;
+}
+
+.image-upload-area:hover .upload-placeholder i {
+    color: var(--admin-primary);
+    transform: scale(1.1);
+}
+
+.upload-placeholder p {
+    margin: 0;
+    font-weight: 500;
+    color: var(--admin-text);
+}
+
+.upload-placeholder small {
+    color: var(--admin-text-muted);
+    font-size: 0.825rem;
 }
 
 .file-input {
@@ -503,8 +623,8 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
 
 .image-preview img {
     width: 100%;
-    height: auto;
     border-radius: 8px;
+    display: block;
 }
 
 .remove-image {
@@ -513,7 +633,7 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
     right: 10px;
     width: 32px;
     height: 32px;
-    background: var(--admin-danger);
+    background: rgba(220, 53, 69, 0.95);
     color: white;
     border: none;
     border-radius: 50%;
@@ -521,44 +641,112 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.1rem;
     transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .remove-image:hover {
-    transform: scale(1.1);
+    background: #c82333;
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
 }
 
+/* ─── FORM TEXT ─── */
+.form-text {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.825rem;
+    color: var(--admin-text-muted);
+    line-height: 1.4;
+}
+
+/* ─── CHECKBOX ─── */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.checkbox-label:hover {
+    background: var(--admin-hover);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--admin-primary);
+}
+
+/* ─── FORM ACTIONS ─── */
 .form-actions {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.btn-block {
-    width: 100%;
-    justify-content: center;
-}
-
+/* ─── ALERT STYLING ─── */
 .alert {
-    padding: 1rem;
+    padding: 1rem 1.25rem;
     border-radius: 8px;
     margin-bottom: 1.5rem;
+    border-left: 4px solid;
 }
 
 .alert-danger {
-    background: #ffebee;
-    border: 1px solid #ef5350;
-    color: #c62828;
+    background: #f8d7da;
+    color: #721c24;
+    border-left-color: #dc3545;
+}
+
+.alert strong {
+    font-weight: 600;
 }
 
 .alert ul {
-    margin: 0;
-    padding-left: 1.5rem;
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
 }
 
+.alert li {
+    margin: 0.25rem 0;
+}
+
+/* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
     .form-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .form-sidebar {
+        position: static;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .page-actions {
+        width: 100%;
+    }
+    
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-card {
+        padding: 1.5rem;
     }
 }
 </style>

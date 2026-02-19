@@ -133,7 +133,7 @@ $pageTitle = 'News & Updates - ' . SITE_NAME;
     <?php include BASE_PATH . '/includes/header.php'; ?>
     
     <!-- Page Header -->
-    <section class="page-header">
+       <section class="page-header" style="background: linear-gradient(135deg, rgba(0, 63, 135, 0.7), rgba(0, 40, 85, 0.9)), url('<?php echo asset("images/school header.jpg"); ?>') center/cover no-repeat;">
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content" data-aos="fade-up">
@@ -147,25 +147,30 @@ $pageTitle = 'News & Updates - ' . SITE_NAME;
         </div>
     </section>
     
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <!-- Category Filter -->
+            <div class="filter-categories" data-aos="fade-up">
+                <a href="?page=1" class="category-chip <?php echo empty($category_filter) ? 'active' : ''; ?>">
+                    All Categories
+                </a>
+                <?php foreach ($categories as $cat): ?>
+                    <a href="?category=<?php echo $cat; ?>&page=1" 
+                       class="category-chip <?php echo $category_filter === $cat ? 'active' : ''; ?>">
+                        <?php echo ucfirst($cat); ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    
     <!-- Main Content -->
     <section class="page-content section-padding">
         <div class="container">
             <div class="row">
                 <!-- Main Content Area -->
                 <div class="col-md-8">
-                    <!-- Category Filter -->
-                    <div class="filter-bar" data-aos="fade-up">
-                        <div class="filter-label">Filter by Category:</div>
-                        <div class="filter-buttons">
-                            <a href="?page=1" class="filter-btn <?php echo empty($category_filter) ? 'active' : ''; ?>">All</a>
-                            <?php foreach ($categories as $cat): ?>
-                                <a href="?category=<?php echo $cat; ?>&page=1" class="filter-btn <?php echo $category_filter === $cat ? 'active' : ''; ?>">
-                                    <?php echo ucfirst($cat); ?>
-                                </a>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    
                     <!-- News Grid (Using card component from cards.css) -->
                     <?php if (!empty($news_list)): ?>
                         <div class="card-grid">
@@ -322,15 +327,14 @@ $pageTitle = 'News & Updates - ' . SITE_NAME;
 </body>
 </html>
 
-<!-- Page-Specific Styles (Keep these for custom styling not in components) -->
+
 <style>
 /* Page Header Styles */
 .page-header {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     padding: 5rem 0 3rem;
     color: var(--color-white);
-    margin-bottom: 3rem;
+    margin-bottom: 0;
 }
 
 .page-header-overlay {
@@ -339,7 +343,7 @@ $pageTitle = 'News & Updates - ' . SITE_NAME;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../assets/images/patterns/pattern-overlay.png') repeat;
+    background: var(--color-primary);
     opacity: 0.1;
 }
 
@@ -380,45 +384,46 @@ $pageTitle = 'News & Updates - ' . SITE_NAME;
     opacity: 1;
     font-weight: 600;
 }
-/* Filter Bar */
-.filter-bar {
-    background: var(--color-white);
-    padding: 1.5rem;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+
+/* Filter Section - Clean Tabs (Same as events.php) */
+.filter-section {
+    background: white;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.filter-label {
-    font-weight: 600;
-    color: var(--color-primary);
-}
-
-.filter-buttons {
+.filter-categories {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
 }
 
-.filter-btn {
-    padding: 0.5rem 1rem;
-    border: 2px solid var(--color-light-gray);
-    border-radius: var(--border-radius-md);
-    color: var(--color-dark-gray);
+.category-chip {
+    padding: 0.5rem 1.25rem;
+    background: white;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 50px;
+    color: #475569;
+    font-size: 0.875rem;
     font-weight: 500;
-    transition: all var(--transition-base);
     text-decoration: none;
+    transition: all 0.25s ease;
 }
 
-.filter-btn:hover,
-.filter-btn.active {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-    color: var(--color-white);
+.category-chip:hover {
+    border-color: #003f87;
+    color: #003f87;
+    transform: translateY(-2px);
+}
+
+.category-chip.active {
+    background: #003f87;
+    border-color: #003f87;
+    color: white;
 }
 
 /* Pagination */
@@ -604,18 +609,8 @@ $pageTitle = 'News & Updates - ' . SITE_NAME;
 
 /* Responsive */
 @media (max-width: 768px) {
-    .filter-bar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .filter-buttons {
-        width: 100%;
-    }
-    
-    .filter-btn {
-        flex: 1;
-        text-align: center;
+    .filter-section {
+        position: relative;
     }
     
     .card-grid {

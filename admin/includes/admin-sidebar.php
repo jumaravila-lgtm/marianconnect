@@ -14,16 +14,6 @@ if (!isset($current_dir)) {
 
 <!-- Admin Sidebar -->
 <aside class="admin-sidebar" id="adminSidebar">
-    <div class="sidebar-header">
-        <div class="sidebar-logo">
-            <img src="<?php echo url('assets/images/logo/logo-white.png'); ?>" alt="SMCC">
-            <span>MARIANCONNECT</span>
-        </div>
-        <button class="sidebar-toggle" id="sidebarToggle">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
-
     <nav class="sidebar-nav">
         <ul class="nav-menu">
             <li class="nav-item <?php echo $current_page === 'index' && $current_dir === 'admin' ? 'active' : ''; ?>">
@@ -54,13 +44,6 @@ if (!isset($current_dir)) {
                 </a>
             </li>
 
-            <li class="nav-item <?php echo $current_dir === 'programs' ? 'active' : ''; ?>">
-                <a href="<?php echo url('admin/programs/index.php'); ?>">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Programs</span>
-                </a>
-            </li>
-
             <li class="nav-item <?php echo $current_dir === 'gallery' ? 'active' : ''; ?>">
                 <a href="<?php echo url('admin/gallery/index.php'); ?>">
                     <i class="fas fa-images"></i>
@@ -68,6 +51,21 @@ if (!isset($current_dir)) {
                 </a>
             </li>
 
+            <li class="nav-item <?php echo $current_dir === 'sliders' ? 'active' : ''; ?>">
+                <a href="<?php echo url('admin/sliders/index.php'); ?>">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Homepage Sliders</span>
+                </a>
+            </li>
+
+            <li class="nav-item <?php echo $current_dir === 'programs' ? 'active' : ''; ?>">
+                <a href="<?php echo url('admin/programs/index.php'); ?>">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Programs</span>
+                </a>
+            </li>
+            
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin'): ?>
             <li class="nav-item <?php echo $current_dir === 'organizations' ? 'active' : ''; ?>">
                 <a href="<?php echo url('admin/organizations/index.php'); ?>">
                     <i class="fas fa-users"></i>
@@ -89,33 +87,21 @@ if (!isset($current_dir)) {
                 </a>
             </li>
 
-            <li class="nav-item <?php echo $current_dir === 'administration' ? 'active' : ''; ?>">
-                <a href="<?php echo url('admin/administration/index.php'); ?>">
-                    <i class="fas fa-users-cog"></i>
-                    <span>Administration</span>
-                </a>
-            </li>
-            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin'): ?>
-            <li class="nav-item <?php echo $current_dir === 'departments' ? 'active' : ''; ?>">
-                <a href="<?php echo url('admin/departments/index.php'); ?>">
-                    <i class="fas fa-building"></i>
-                    <span>Departments</span>
-                </a>
-            </li>
-            <?php endif; ?>
-            <li class="nav-item <?php echo $current_dir === 'sliders' ? 'active' : ''; ?>">
-                <a href="<?php echo url('admin/sliders/index.php'); ?>">
-                    <i class="fas fa-sliders-h"></i>
-                    <span>Homepage Sliders</span>
-                </a>
-            </li>
-
             <li class="nav-item <?php echo $current_dir === 'pages' ? 'active' : ''; ?>">
                 <a href="<?php echo url('admin/pages/index.php'); ?>">
                     <i class="fas fa-file-alt"></i>
                     <span>Pages</span>
                 </a>
             </li>
+
+            <li class="nav-item <?php echo $current_dir === 'administration' ? 'active' : ''; ?>">
+                <a href="<?php echo url('admin/administration/index.php'); ?>">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Administration</span>
+                </a>
+            </li> 
+
+            <?php endif; ?>
 
             <li class="nav-item <?php echo $current_dir === 'messages' ? 'active' : ''; ?>">
                 <a href="<?php echo url('admin/messages/index.php'); ?>">
@@ -127,6 +113,15 @@ if (!isset($current_dir)) {
                 </a>
             </li>
 
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin'): ?>
+                <li class="nav-item <?php echo $current_dir === 'users' ? 'active' : ''; ?>">
+                    <a href="<?php echo url('admin/users/index.php'); ?>">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Admin Users</span>
+                    </a>
+                </li>
+            <?php endif; ?>
+
             <li class="nav-item <?php echo $current_dir === 'analytics' ? 'active' : ''; ?>">
                 <a href="<?php echo url('admin/analytics/index.php'); ?>">
                     <i class="fas fa-chart-line"></i>
@@ -134,20 +129,12 @@ if (!isset($current_dir)) {
                 </a>
             </li>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin'): ?>
-            <li class="nav-item <?php echo $current_dir === 'settings' ? 'active' : ''; ?>">
-                <a href="<?php echo url('admin/settings/index.php'); ?>">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
-            <?php endif; ?>
-            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin'): ?>
-            <li class="nav-item <?php echo $current_dir === 'users' ? 'active' : ''; ?>">
-                <a href="<?php echo url('admin/users/index.php'); ?>">
-                    <i class="fas fa-user-shield"></i>
-                    <span>Admin Users</span>
-                </a>
-            </li>
+                <li class="nav-item <?php echo $current_dir === 'settings' ? 'active' : ''; ?>">
+                    <a href="<?php echo url('admin/settings/index.php'); ?>">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
             <?php endif; ?>
         </ul>
     </nav>
