@@ -355,11 +355,6 @@ document.querySelector('.admin-form').addEventListener('submit', () => formChang
 </script>
 
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   UPDATED STYLING FOR ADMINISTRATION CREATE.PHP
-   (To match announcements/create.php styling)
-   Replace the <style> section in your create.php with this
-   ═══════════════════════════════════════════════════════════════ */
 
 /* ─── PAGE HEADER ─── */
 .page-header {

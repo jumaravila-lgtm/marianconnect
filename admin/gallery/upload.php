@@ -270,11 +270,6 @@ include '../includes/admin-header.php';
     </div>
 </form>
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   UPDATED STYLING FOR GALLERY UPLOAD.PHP
-   (To match announcements/create.php styling)
-   Replace the <style> section in your upload.php with this
-   ═══════════════════════════════════════════════════════════════ */
 
 /* ─── PAGE HEADER ─── */
 .page-header {

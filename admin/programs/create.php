@@ -196,11 +196,6 @@ include '../includes/admin-header.php';
 </form>
 
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   UPDATED STYLING FOR PROGRAMS CREATE.PHP
-   (To match announcements/create.php styling)
-   Replace the <style> section in your create.php with this
-   ═══════════════════════════════════════════════════════════════ */
 
 /* ─── PAGE HEADER ─── */
 .page-header {
