@@ -124,7 +124,7 @@ include '../includes/admin-header.php';
                 <tr>
                     <td>
                         <?php if ($facility['featured_image']): ?>
-                            <img src="/marianconnect<?php echo escapeHtml($facility['featured_image']); ?>" alt="" class="facility-thumb">
+                            <img src="<?php echo escapeHtml($facility['featured_image']); ?>" alt="" class="facility-thumb">
                         <?php else: ?>
                             <div class="facility-thumb-placeholder"><i class="fas fa-building"></i></div>
                         <?php endif; ?>

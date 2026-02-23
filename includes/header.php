@@ -1,8 +1,8 @@
 <?php
 /**
- * MARIANCONNECT - Main Header (FIXED VERSION)
+ * MARIANCONNECT - Main Header 
  */
-
+checkMaintenanceMode();
 if (!defined('SITE_NAME')) {
     require_once __DIR__ . '/../config/settings.php';
 }

@@ -132,7 +132,7 @@ include '../includes/admin-header.php';
                     <td>
                         <div class="achievement-title"><?php echo escapeHtml($achievement['title']); ?></div>
                         <?php if ($achievement['is_featured']): ?>
-                            <span class="badge badge-featured"><i class="fas fa-star"></i> Featured</span>
+                            <span class="badge badge-star">⭐ Featured</span>
                         <?php endif; ?>
                     </td>
                     <td>
@@ -441,6 +441,12 @@ include '../includes/admin-header.php';
 }
 
 /* Badges */
+.badge-star {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #856404;
+    margin-left: 0.5rem;
+    box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+}
 .badge {
     display: inline-flex;
     align-items: center;

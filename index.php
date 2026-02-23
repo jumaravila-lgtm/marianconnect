@@ -80,7 +80,7 @@ try {
 
 // Get site settings
 $siteName = getSiteSetting('site_name', 'St. Mary\'s College of Catbalogan');
-$siteTagline = getSiteSetting('site_tagline', 'Excellence in Catholic Education');
+$siteTagline = getSiteSetting('site_tagline', 'Faith • Excellence • Service');
 
 $pageTitle = $siteName . ' - ' . $siteTagline;
 
@@ -202,7 +202,7 @@ $pageTitle = $siteName . ' - ' . $siteTagline;
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6" data-aos="fade-right">
-                    <img src="assets/images/president.jpg" alt="School President" class="img-fluid rounded shadow">
+                    <img src="assets/images/president1.jpg" alt="School President" class="img-fluid rounded shadow">
                 </div>
                 <div class="col-md-6" data-aos="fade-left">
                     <h2 class="section-title">Welcome to <?php echo escapeHtml($siteName); ?></h2>

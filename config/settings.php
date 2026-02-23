@@ -12,8 +12,8 @@ date_default_timezone_set('Asia/Manila');
 
 // Site Configuration
 define('SITE_NAME', 'St. Mary\'s College of Catbalogan');
-define('SITE_TAGLINE', 'Excellence in Catholic Education');
-define('SITE_URL', 'http://localhost/marianconnect'); // Change to https://smcc.edu.ph in production
+define('SITE_TAGLINE', 'Faith | Excellence | Service');
+define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 define('ADMIN_URL', SITE_URL . '/admin');
 
 // Path Configuration
@@ -67,7 +67,10 @@ define('RECAPTCHA_SITE_KEY', ''); // Add your reCAPTCHA site key
 define('RECAPTCHA_SECRET_KEY', ''); // Add your reCAPTCHA secret key
 
 // Maintenance Mode
-define('MAINTENANCE_MODE', false);
+$_maintenance_db = getDB();
+$_maintenance_stmt = $_maintenance_db->query("SELECT setting_value FROM site_settings WHERE setting_key = 'maintenance_mode'");
+$_maintenance_val = $_maintenance_stmt->fetchColumn();
+define('MAINTENANCE_MODE', $_maintenance_val === 'true');
 define('MAINTENANCE_MESSAGE', 'Website is currently under maintenance. Please check back soon.');
 
 // Cache Settings

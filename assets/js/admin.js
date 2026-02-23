@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebar = document.getElementById('adminSidebar');
     const mainContent = document.getElementById('adminMain');
     const sidebarToggle = document.getElementById('sidebarToggle');
-    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileToggle = document.getElementById('sidebarToggle');
     
     // Toggle sidebar on desktop
     function toggleSidebar() {
@@ -21,12 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('sidebarCollapsed', sidebar?.classList.contains('collapsed'));
     }
     
-    sidebarToggle?.addEventListener('click', toggleSidebar);
-    
-    // Toggle sidebar on mobile
-    mobileToggle?.addEventListener('click', function() {
+    sidebarToggle?.addEventListener('click', function() {
+    if (window.innerWidth <= 768) {
         sidebar?.classList.toggle('mobile-open');
-    });
+    } else {
+        toggleSidebar();
+    }
+});
     
     // Close mobile sidebar when clicking outside
     document.addEventListener('click', function(e) {
